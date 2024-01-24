@@ -12,13 +12,17 @@
   font-size:12px;
 }
 
-
-button[name="upload"]{
-  padding:10px;
-  border:0;
+#control > *{
   background-color:black;
   color:white;
   border-radius:5px;
+  padding:10px;
+}
+
+
+button[name="upload"]{
+  border:0;
+  
   cursor:pointer;
 }
 button[name="upload"]:hover{
@@ -29,13 +33,18 @@ label.grid{
   display:flex;
   align-items:center;
   cursor:pointer;
-  background-color:black;
-  color:white;
-  padding:10px;
-  border-radius:5px;
 }
 
 input[type="checkbox"][name="grid"]{
   margin-right:10px;
 }
+
+.ambient{
+  display:flex;
+  gap:10px;
+}
+[name="ambient"]{
+  border:0;
+}
+
 

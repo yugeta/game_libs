@@ -30,4 +30,5 @@ export class Data{
   static elm_upload_button = document.querySelector(`button[name="upload"]`)
   static elm_upload_file   = document.querySelector(`input[type="file"][name="glb"]`)
   static elm_grid_button   = document.querySelector(`input[name="grid"]`)
+  static elm_ambient       = document.querySelector(`input[name="ambient"]`)
 }

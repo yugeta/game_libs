@@ -6,6 +6,7 @@ import { DRACOLoader }   from "DRACOLoader"
 import { Data }          from "./data.js"
 import { Load }          from "./load.js"
 import { Camera }        from "./camera.js"
+import { Light }         from "./light.js"
 
 export class Event{
   constructor(){
@@ -16,9 +17,10 @@ export class Event{
     document.addEventListener('touchmove'  , this.mousemove.bind(this) , false)
     document.addEventListener('touchend'   , this.mouseup.bind(this)   , false)
     window.addEventListener('resize'       , this.resize.bind(this)    , false)
-    Data.elm_upload_button.addEventListener("click" , (()=> {Data.elm_upload_file.click()}))
-    Data.elm_upload_file.addEventListener("change" , ((e)=> new Load(e)))
-    Data.elm_grid_button.addEventListener("click" , (()=> Camera.click_grid()))
+    Data.elm_upload_button.addEventListener("click" , ((e)=> {Data.elm_upload_file.click(e)}))
+    Data.elm_upload_file.addEventListener("change"  , ((e)=> new Load(e)))
+    Data.elm_grid_button.addEventListener("click"   , ((e)=> Camera.click_grid(e)))
+    Data.elm_ambient.addEventListener("change"      , ((e)=>Light.change_ambient(e)))
   }
 
   resize() {

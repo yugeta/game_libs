@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    canvas {
+      display: block;
+    }
+  </style>
+  <title>3D Camera Movement</title>
+</head>
+<body>
+  <script>
+    const canvas = document.createElement('canvas');
+    document.body.appendChild(canvas);
+    const context = canvas.getContext('2d');
+    
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const camera = {
+      x: 0,
+      y: 0,
+      z: 500,
+      pitch: 0,
+      yaw: 0,
+      roll: 0
+    };
+
+    const radius = 200;
+    const sensitivity = 0.005;
+
+    function updateCamera() {
+      // マウスの移動量を取得
+      const dx = (mouseX - canvas.width / 2) * sensitivity;
+      const dy = (mouseY - canvas.height / 2) * sensitivity;
+
+      // カメラの角度を更新
+      camera.yaw += dx;
+      camera.pitch -= dy;
+
+      // カメラの位置を更新
+      camera.x = radius * Math.sin(camera.yaw);
+      camera.z = radius * Math.cos(camera.yaw);
+      camera.y = radius * Math.sin(camera.pitch);
+
+      // 描画
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.fillStyle = 'red';
+      context.beginPath();
+      context.arc(canvas.width / 2 + camera.x, canvas.height / 2 + camera.y, 20, 0, Math.PI * 2);
+      context.fill();
+    }
+
+    let mouseX, mouseY;
+
+    function handleMouseMove(event) {
+      mouseX = event.clientX;
+      mouseY = event.clientY;
+    }
+
+    function animate() {
+      updateCamera();
+      requestAnimationFrame(animate);
+    }
+
+    document.addEventListener('mousemove', handleMouseMove);
+    animate();
+  </script>
+</body>
+</html>

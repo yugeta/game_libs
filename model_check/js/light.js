@@ -14,15 +14,17 @@ export class Light{
     obj   : null,
     color : "#FFFFFF",
     pos   : {
-      x : 50,
-      y : 70,
-      z : 50,
+      x : 5,
+      y : 7,
+      z : 5,
     },
+    size : 0.5,
   }
 
   constructor(){
     this.init()
     this.set_light()
+    this.view_lisht()
     this.set_ambient()
   }
 
@@ -35,6 +37,14 @@ export class Light{
     Light.direct.obj = new THREE.DirectionalLight(color, 5)
     Light.direct.obj.position.set( Light.direct.pos.x, Light.direct.pos.y, Light.direct.pos.z ).normalize()
     Render.scene.add(Light.direct.obj)
+  }
+
+  view_lisht(){
+    const geometry = new THREE.SphereGeometry( Light.direct.size, 10, 10)
+    // const material = new THREE.MeshNormalMaterial()
+    const sphere   = new THREE.Mesh(geometry)
+    sphere.position.set(Light.direct.pos.x, Light.direct.pos.y, Light.direct.pos.z)
+    Render.scene.add(sphere);
   }
 
   set_ambient(){

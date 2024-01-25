@@ -11,20 +11,23 @@ export class Light{
     intensity : 1.0,
   }
   static direct = {
+    move_flg : false,
+    name  : "direct_light",
     obj   : null,
     color : "#FFFFFF",
+    color_select : "#FF0000",
     pos   : {
       x : 5,
       y : 7,
       z : 5,
     },
-    size : 0.5,
+    size : 0.3,
   }
 
   constructor(){
     this.init()
     this.set_light()
-    this.view_lisht()
+    this.view_light()
     this.set_ambient()
   }
 
@@ -39,11 +42,13 @@ export class Light{
     Render.scene.add(Light.direct.obj)
   }
 
-  view_lisht(){
+  view_light(){
     const geometry = new THREE.SphereGeometry( Light.direct.size, 10, 10)
     // const material = new THREE.MeshNormalMaterial()
-    const sphere   = new THREE.Mesh(geometry)
+    const material = new THREE.MeshBasicMaterial( { color: Data.color(Light.direct.color) } ); 
+    const sphere   = new THREE.Mesh(geometry, material)
     sphere.position.set(Light.direct.pos.x, Light.direct.pos.y, Light.direct.pos.z)
+    sphere.name = Light.direct.name
     Render.scene.add(sphere);
   }
 
@@ -58,6 +63,12 @@ export class Light{
     intensity = intensity || Light.ambient.intensity
     Light.ambient.obj.color     = Data.color(color)
     Light.ambient.obj.intensity = intensity
+  }
+
+  static get sphere(){
+    // console.log(Render.scene.children)
+    // const intersects = raycaster.intersectObjects(Render.scene.children)
+    return Render.scene.children.find(e => e.name === Light.direct.name)
   }
 
 }

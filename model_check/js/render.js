@@ -1,10 +1,11 @@
 import * as THREE      from "three"
-import { GLTFLoader }  from "GLTFLoader"
-// import { DRACOLoader } from "DRACOLoader"
-
 import { Data }        from "./data.js"
+import { Camera }      from "./camera.js"
 
 export class Render{
+  static renderer = null
+  static scene    = null
+
   constructor(){
     this.set_renderer()
     this.render()
@@ -12,17 +13,17 @@ export class Render{
 
   //レンダラーを作成
   set_renderer(){
-    Data.renderer = new THREE.WebGLRenderer()
-    Data.renderer.setSize(window.innerWidth, window.innerHeight)
-    Data.root.elm.appendChild(Data.renderer.domElement)
+    Render.renderer = new THREE.WebGLRenderer()
+    Render.renderer.setSize(window.innerWidth, window.innerHeight)
+    Data.root.elm.appendChild(Render.renderer.domElement)
     //背景色を設定
-    Data.renderer.setClearColor(Data.root.bg_color, 1)
+    Render.renderer.setClearColor(Data.root.bg_color, 1)
   }
 
   //毎フレーム時に実行されるループイベント
   render() {
     requestAnimationFrame( this.render.bind(this) )
     if (Data.mixer) Data.mixer.update(Data.clock.getDelta())
-    Data.renderer.render(Data.scene, Data.camera)
+    Render.renderer.render(Render.scene, Camera.obj)
   }
 }

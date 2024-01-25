@@ -1,11 +1,9 @@
 import * as THREE      from "three"
-import { GLTFLoader }  from "GLTFLoader"
 import { DRACOLoader } from "DRACOLoader"
+import { Data }        from "./data.js"
+import { Render }      from "./render.js"
 
-import { Glb }  from "./glb.js"
-import { Data } from "./data.js"
-
-export class Load{
+export class Model{
   constructor(e){
     this.read(e.target.files[0])
   }
@@ -40,17 +38,18 @@ export class Load{
   }
 
   loaded(gltf){
-    Data.mesh = gltf.scene
+    const mesh = gltf.scene
+
     // transform
-    Data.mesh.scale.set(
+    mesh.scale.set(
       Data.object_scale,
       Data.object_scale,
       Data.object_scale
     )
-    Data.mesh.rotation.set(
+    mesh.rotation.set(
       0,0,0
     )
-    Data.mesh.position.set(
+    mesh.position.set(
       Data.object_pos.x,
       Data.object_pos.y,
       Data.object_pos.z,
@@ -58,11 +57,29 @@ export class Load{
 
     const animations = gltf.animations
     if ( animations && animations.length ) {
-      Data.mixer = new THREE.AnimationMixer(Data.mesh)
+      Data.mixer = new THREE.AnimationMixer(mesh)
       for(const animation of animations){
         Data.mixer.clipAction(animation).play()
       }
     }
-    Data.scene.add(Data.mesh)
+    Render.scene.add(mesh)
+    Data.mesh.push(mesh)
+    Model.click_wire(Data.elm_wire_button.checked)
+  }
+
+  // ワイヤーフレーム化(戻す)
+  static click_wire(flg){
+    for(const obj of Data.mesh){
+      obj.traverse((obj3d) => {
+        if(obj3d.material){
+          obj3d.material.wireframe = flg
+        }
+        if(Array.isArray(obj3d.material)){
+          obj3d.material.forEach(function(mat, idx){
+            mat.wireframe = flg
+          })
+        }
+      })
+    }
   }
 }

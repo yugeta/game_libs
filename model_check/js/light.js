@@ -1,42 +1,53 @@
 import * as THREE      from "three"
-import { GLTFLoader }  from "GLTFLoader"
-// import { DRACOLoader } from "DRACOLoader"
-
 import { Data }        from "./data.js"
+import { Render }      from "./render.js"
 
 export class Light{
 
-  static color_ambient = "#aaaaaa"
+  static ambient = {
+    obj   : null,
+    color : "#ffffff",
+    elm   : document.querySelector(`input[name="ambient"]`),
+    intensity : 1.0,
+  }
+  static direct = {
+    obj   : null,
+    color : "#FFFFFF",
+    pos   : {
+      x : 50,
+      y : 70,
+      z : 50,
+    },
+  }
 
   constructor(){
-    this.set_control()
+    this.init()
     this.set_light()
     this.set_ambient()
   }
 
-  static get ambient_color(){
-    return Data.elm_ambient.value
+  init(){
+    Light.ambient.elm.value = Light.ambient.color
   }
 
-  set_control(){
-    Data.elm_ambient.value = Light.color_ambient
-  }
-
-  //光源を作成
   set_light(){
-    Data.light = new THREE.DirectionalLight("#ffffff", 5)
-    Data.light.position.set( 0, 70, 100 ).normalize()
-    Data.scene.add(Data.light)
+    const color = Data.color(Light.direct.color)
+    Light.direct.obj = new THREE.DirectionalLight(color, 5)
+    Light.direct.obj.position.set( Light.direct.pos.x, Light.direct.pos.y, Light.direct.pos.z ).normalize()
+    Render.scene.add(Light.direct.obj)
   }
 
   set_ambient(){
-    Data.ambient = new THREE.AmbientLight(Light.color_ambient)
-    Data.scene.add(Data.ambient)
+    const color = Data.color(Light.ambient.elm.value)
+    Light.ambient.obj = new THREE.AmbientLight(color , Light.ambient.intensity)
+    Render.scene.add(Light.ambient.obj)
   }
 
-  static change_ambient(){
-    const color = new THREE.Color(Light.ambient_color)
-    Data.ambient.color = color
+  static change_ambient(color , intensity){
+    color     = color || Light.ambient.color
+    intensity = intensity || Light.ambient.intensity
+    Light.ambient.obj.color     = Data.color(color)
+    Light.ambient.obj.intensity = intensity
   }
 
 }

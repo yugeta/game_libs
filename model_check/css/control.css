@@ -29,20 +29,14 @@ button[name="upload"]:hover{
   opacity:0.5;
 }
 
-label.grid{
+label{
   display:flex;
   align-items:center;
   cursor:pointer;
-}
-
-input[type="checkbox"][name="grid"]{
-  margin-right:10px;
-}
-
-.ambient{
-  display:flex;
   gap:10px;
 }
+
+
 [name="ambient"]{
   border:0;
 }

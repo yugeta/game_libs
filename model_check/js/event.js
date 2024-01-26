@@ -6,14 +6,23 @@ import { Light }         from "./light.js"
 import { Render }        from "./render.js"
 
 export class Event{
+  plane        = new THREE.Plane()
+  raycaster    = new THREE.Raycaster()
+  vector       = new THREE.Vector2()
+  offset       = new THREE.Vector3()
+  intersection = new THREE.Vector3()
+
+  mouse = {
+    vector : new THREE.Vector2(),
+    pos : {
+      x : null,
+      y : null,
+      z : null,
+    },
+    drag : null,
+  }
+
   constructor(){
-    // document.addEventListener('mousedown'  , this.mousedown.bind(this) , false)
-    // document.addEventListener('mousemove'  , this.mousemove.bind(this) , false)
-    // document.addEventListener('mouseup'    , this.mouseup.bind(this)   , false)
-    // document.addEventListener('touchstart' , this.mousedown.bind(this) , false)
-    // document.addEventListener('touchmove'  , this.mousemove.bind(this) , false)
-    // document.addEventListener('touchend'   , this.mouseup.bind(this)   , false)
-   
     this.control()
     this.mesh_click()
   }
@@ -33,41 +42,73 @@ export class Event{
   }
 
   mousedown(e){
-    const raycaster = new THREE.Raycaster()
-    const vector = new THREE.Vector2(
-      (e.clientX / Data.root.elm.offsetWidth) * 2 - 1,
+
+    // light-direct
+    this.vector = new THREE.Vector2(
+      (e.clientX / Data.root.elm.offsetWidth ) *  2 - 1,
       (e.clientY / Data.root.elm.offsetHeight) * -2 + 1
     )
-    raycaster.setFromCamera(vector, Camera.obj)
-    const intersects = raycaster.intersectObjects(Render.scene.children)
+    this.raycaster.setFromCamera(this.vector, Camera.obj)
+    const intersects = this.raycaster.intersectObjects(Render.scene.children)
     if(!intersects.length){return}
-    const light_sphere = Light.sphere
+    Camera.obj.getWorldDirection(this.plane.normal) // 平面の角度をカメラの向きに対して垂直に維持する(plane.normalにカメラの方向ベクトルを設定)
+
     switch(intersects[0].object.name){
       case "direct_light":
-        light_sphere.material.color = Data.color(Light.direct.color_select)
-        Light.direct.move_flg = true
-        Camera.control.enabled = false
+        Light.sphere.material.color = Data.color(Light.direct.color_select)
+        Camera.control.enabled = false // ライトクリックの場合は、画面操作を無効にする。
+        this.mouse.drag = intersects[0].object
+        if (this.raycaster.ray.intersectPlane(this.plane, this.intersection)){ // rayとplaneの交点を求めてintersectionに設定
+          this.offset.copy(this.intersection).sub(this.mouse.drag.position) // ドラッグ中のオブジェクトとplaneの距離
+        }
       break
 
-      default:
-        if(Light.direct.move_flg){
-          light_sphere.material.color = Data.color(Light.direct.color)
-          Light.direct.move_flg = false
-        }
+      // default:
+      //   if(Light.direct.move_flg){
+      //     Light.sphere.material.color = Data.color(Light.direct.color)
+      //     Light.direct.move_flg = false
+      //   }
     }
   }
 
-  mousemove(){
+  mousemove(e){
+    // mouse
+    if(this.mouse.drag){
+      e.preventDefault()
+      this.vector.x =   (e.clientX / Data.root.elm.offsetWidth ) * 2 - 1
+      this.vector.y = - (e.clientY / Data.root.elm.offsetHeight) * 2 + 1
+      this.raycaster.setFromCamera(this.vector, Camera.obj)
+      if(this.raycaster.ray.intersectPlane(this.plane, this.intersection)){ // rayとplaneの交点をintersectionに設定
+        this.mouse.drag.position.copy(this.intersection.sub(this.offset)) // オブジェクトをplaneに対して平行に移動させる
+        // console.log(this.mouse.drag.position)
+        Light.set_direct_pos(this.mouse.drag.position)
+      }
+    }
 
+    else{
+      // const intersects = this.raycaster.intersectObjects(Render.scene.children) // オブジェクトをドラッグしないでマウスを動かしている場合
+      // if(intersects.length > 0) {
+      //   if(this.mouse.drag != intersects[0].object){
+      //     this.mouse.drag = intersects[0].object // マウスオーバー中のオブジェクトを入れ替え
+      //   }
+      // }
+      // else{
+      //   mouseoveredObj = null;
+      // }
+    }
   }
 
   mouseup(){
+
+    // light-direct
     const light_sphere = Light.sphere
-    if(Light.direct.move_flg){
+    if(this.mouse.drag){
       light_sphere.material.color = Data.color(Light.direct.color)
       light_sphere.flg = false
       Camera.control.enabled = true
+      this.mouse.drag = null
     }
+    
   }
 
 

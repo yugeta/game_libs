@@ -21,13 +21,16 @@ export class Light{
       z : 5,
     },
     size : 0.3,
+    line_name : "direct-light-line",
   }
 
   constructor(){
     this.init()
+    this.set_ambient()
     this.set_light()
     this.view_light()
-    this.set_ambient()
+    this.view_light_line()
+    
   }
 
   init(){
@@ -42,12 +45,28 @@ export class Light{
   }
 
   view_light(){
-    const geometry = new THREE.SphereGeometry( Light.direct.size, 10, 10)
-    const material = new THREE.MeshBasicMaterial( { color: Data.color(Light.direct.color) } ); 
+    const geometry = new THREE.SphereGeometry(Light.direct.size, 10, 10)
+    const material = new THREE.MeshBasicMaterial({color: Data.color(Light.direct.color)})
     const sphere   = new THREE.Mesh(geometry, material)
     sphere.position.set(Light.direct.pos.x, Light.direct.pos.y, Light.direct.pos.z)
     sphere.name = Light.direct.name
-    Render.scene.add(sphere);
+    Render.scene.add(sphere)
+  }
+  view_light_line(){
+    const points = [
+      new THREE.Vector3(0, 0, 0),
+      new THREE.Vector3(Light.direct.pos.x, Light.direct.pos.y, Light.direct.pos.z),
+    ]
+    const color = Data.color(Light.direct.color)
+    const geometry = new THREE.BufferGeometry().setFromPoints(points)
+    const material = new THREE.LineBasicMaterial({color: color})
+    const line = new THREE.Line(geometry, material)
+    line.name = Light.direct.line_name
+    // line.matrixAutoUpdate = false;
+    
+    Render.scene.add(line)
+    // line.geometry.attributes.position.needsUpdate = true
+    // Light.light_line = line
   }
 
   set_ambient(){
@@ -68,9 +87,23 @@ export class Light{
   }
 
   static set_direct_pos(pos){
+    Light.direct.pos.x = pos.x
+    Light.direct.pos.y = pos.y
+    Light.direct.pos.z = pos.z
     Light.direct.obj.position.x = pos.x
     Light.direct.obj.position.y = pos.y
     Light.direct.obj.position.z = pos.z
+    this.set_line_pos()
+  }
+
+  static get line(){
+    return Render.scene.children.find(e => e.name === Light.direct.line_name)
+  }
+  static set_line_pos(){ 
+    const line = Light.line
+    const line_position = line.geometry.getAttribute("position")
+    line_position.setXYZ(1, Light.direct.pos.x, Light.direct.pos.y, Light.direct.pos.z)
+    line_position.needsUpdate = true;
   }
 
 }

@@ -18,8 +18,8 @@ export class Camera{
 
   //カメラを作成
   init(){
-    Camera.obj = new THREE.PerspectiveCamera( 20, window.innerWidth/window.innerHeight, 0.1, 1000 )
-    Camera.control = new OrbitControls(Camera.obj, Data.root.elm);
+    Camera.obj = new THREE.PerspectiveCamera(20, window.innerWidth/window.innerHeight, 0.1, 1000)
+    Camera.control = new OrbitControls(Camera.obj, Data.root.elm)
     Camera.pos()
   }
 
@@ -28,7 +28,7 @@ export class Camera{
     Camera.obj.position.y = Camera.position.y
     Camera.obj.position.x = Camera.position.x
     const center_pos = new THREE.Vector3(Camera.center.x, Camera.center.y, Camera.center.z)
-    Camera.obj.lookAt(center_pos);
+    Camera.obj.lookAt(center_pos)
   }
 
   grid(){

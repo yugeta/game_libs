@@ -20,6 +20,7 @@ export class Light{
       y : 7,
       z : 5,
     },
+    segment: 8,
     size : 0.3,
     line_name : "direct-light-line",
   }
@@ -45,7 +46,7 @@ export class Light{
   }
 
   view_light(){
-    const geometry = new THREE.SphereGeometry(Light.direct.size, 10, 10)
+    const geometry = new THREE.SphereGeometry(Light.direct.size, Light.direct.segment, Light.direct.segment)
     const material = new THREE.MeshBasicMaterial({
       color   : Data.color(Light.direct.color),
       opacity : 0.5,

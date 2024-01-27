@@ -4,6 +4,7 @@ import { Model }         from "./model.js"
 import { Camera }        from "./camera.js"
 import { Light }         from "./light.js"
 import { Render }        from "./render.js"
+import { Select }        from "./select.js"
 
 export class Event{
   plane        = new THREE.Plane()
@@ -55,12 +56,15 @@ export class Event{
 
     switch(intersects[0].object.name){
       case "direct_light":
-        Light.sphere.material.color = Data.color(Light.direct.color_select)
+        // Light.sphere.material.color = Data.color(Light.direct.color_select) // 選択時に色変更
         Camera.control.enabled = false // ライトクリックの場合は、画面操作を無効にする。
         this.mouse.drag = intersects[0].object
         if (this.raycaster.ray.intersectPlane(this.plane, this.intersection)){ // rayとplaneの交点を求めてintersectionに設定
           this.offset.copy(this.intersection).sub(this.mouse.drag.position) // ドラッグ中のオブジェクトとplaneの距離
         }
+
+        // edgeの表示
+        Select.view(Light.sphere, Light.direct.pos)
       break
 
       // default:
@@ -82,6 +86,7 @@ export class Event{
         this.mouse.drag.position.copy(this.intersection.sub(this.offset)) // オブジェクトをplaneに対して平行に移動させる
         // console.log(this.mouse.drag.position)
         Light.set_direct_pos(this.mouse.drag.position)
+        Select.position(Light.direct.pos)
       }
     }
 
@@ -99,7 +104,6 @@ export class Event{
   }
 
   mouseup(){
-
     // light-direct
     const light_sphere = Light.sphere
     if(this.mouse.drag){
@@ -107,6 +111,8 @@ export class Event{
       light_sphere.flg = false
       Camera.control.enabled = true
       this.mouse.drag = null
+      // edgeの削除
+      Select.clear()
     }
     
   }

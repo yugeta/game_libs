@@ -46,7 +46,11 @@ export class Light{
 
   view_light(){
     const geometry = new THREE.SphereGeometry(Light.direct.size, 10, 10)
-    const material = new THREE.MeshBasicMaterial({color: Data.color(Light.direct.color)})
+    const material = new THREE.MeshBasicMaterial({
+      color   : Data.color(Light.direct.color),
+      opacity : 0.5,
+      transparent: true,
+    })
     const sphere   = new THREE.Mesh(geometry, material)
     sphere.position.set(Light.direct.pos.x, Light.direct.pos.y, Light.direct.pos.z)
     sphere.name = Light.direct.name
@@ -59,15 +63,14 @@ export class Light{
     ]
     const color = Data.color(Light.direct.color)
     const geometry = new THREE.BufferGeometry().setFromPoints(points)
-    const material = new THREE.LineBasicMaterial({color: color})
+    const material = new THREE.LineBasicMaterial({
+      color   : color,
+      opacity : 0.5,
+      transparent: true,
+    })
     const line = new THREE.Line(geometry, material)
     line.name = Light.direct.line_name
-    // line.matrixAutoUpdate = false;
-    
-    Render.scene.add(line)
-    // line.geometry.attributes.position.needsUpdate = true
-    // Light.light_line = line
-  }
+    Render.scene.add(line)  }
 
   set_ambient(){
     const color = Data.color(Light.ambient.elm.value)

@@ -1,0 +1,45 @@
+#control{
+  position:absolute;
+  top:0;
+  left:0;
+  padding:10px;
+  margin:0;
+  z-index:10;
+  display:flex;
+  gap:10px;
+}
+#control *{
+  font-size:12px;
+}
+
+#control > *{
+  background-color:black;
+  color:white;
+  border-radius:5px;
+  padding:10px;
+}
+
+
+button[name="upload"]{
+  border:0;
+  
+  cursor:pointer;
+}
+button[name="upload"]:hover{
+  opacity:0.5;
+}
+
+label{
+  display:flex;
+  align-items:center;
+  cursor:pointer;
+  gap:10px;
+}
+
+
+[name="ambient"]{
+  border:0;
+  width:30px;
+}
+
+

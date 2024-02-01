@@ -54,6 +54,8 @@ export class Event{
     if(!intersects.length){return}
     Camera.obj.getWorldDirection(this.plane.normal) // 平面の角度をカメラの向きに対して垂直に維持する(plane.normalにカメラの方向ベクトルを設定)
 
+    if(!intersects[0].object){return}
+
     switch(intersects[0].object.name){
       case "direct_light":
         // Light.sphere.material.color = Data.color(Light.direct.color_select) // 選択時に色変更
@@ -67,11 +69,16 @@ export class Event{
         Select.view(Light.sphere, Light.direct.pos)
       break
 
-      // default:
-      //   if(Light.direct.move_flg){
-      //     Light.sphere.material.color = Data.color(Light.direct.color)
-      //     Light.direct.move_flg = false
-      //   }
+      default:
+        for(const intersect of intersects){
+          if(!intersect.object || intersect.object.type !== "Mesh"){continue}
+          this.object_select(intersect.object)
+          break
+        }
+        // if(intersects[0].object && intersects[0].object.type === 'Mesh'){
+        //   this.current_object = intersects[0]
+        //   this.object_select(intersects[0].object)
+        // }
     }
   }
 
@@ -114,7 +121,10 @@ export class Event{
       // edgeの削除
       Select.clear()
     }
-    
+    if(this.current_object){
+      this.object_unselect()
+      this.current_object = null
+    }
   }
 
 
@@ -131,6 +141,20 @@ export class Event{
     Camera.obj.aspect = window.innerWidth / window.innerHeight
     Camera.obj.updateProjectionMatrix()
     Render.renderer.setSize( window.innerWidth, window.innerHeight )
+  }
+
+  // Object select
+
+  object_select(object){
+    if(!object){return}
+    this.current_object = object
+    Select.view(object, object.position)
+  }
+
+  object_unselect(){
+    if(!this.current_object){return}
+    const object = this.current_object
+    Select.clear(object)
   }
 
 }

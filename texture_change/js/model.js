@@ -65,6 +65,7 @@ export class Model{
     Render.scene.add(mesh)
     Data.mesh.push(mesh)
     Model.click_wire(Data.elm_wire_button.checked)
+    this.texture_change()
   }
 
   // ワイヤーフレーム化(戻す)
@@ -81,5 +82,9 @@ export class Model{
         }
       })
     }
+  }
+
+  texture_change(){
+    console.log(Data.mesh)
   }
 }

@@ -9,6 +9,7 @@
       "imports": {
         "three"         : "https://unpkg.com/three@0.141.0/build/three.module.js",
         "GLTFLoader"    : "https://unpkg.com/three@0.141.0/examples/jsm/loaders/GLTFLoader.js",
+        "FBXLoader"     : "https://unpkg.com/three@0.139.1/examples/jsm/loaders/FBXLoader.js",
         "OrbitControls" : "https://unpkg.com/three@0.139.2/examples/jsm/controls/OrbitControls.js",
         "DRACOLoader"   : "https://unpkg.com/three@0.139.2/examples/jsm/loaders/DRACOLoader.js"
       }
@@ -21,7 +22,7 @@
 
   <div id="control">
     <div class="hidden"><input type="file" name="glb" accept=".glb, .gltf, .fbx"/></div>
-    <button name="upload">3Dデータアップロード (glb)</button>
+    <button name="upload">3Dデータアップロード (glb,glft,fbx)</button>
     <label class="grid"><input type="checkbox" name="grid" checked/>Grid</label>
     <label class="wire"><input type="checkbox" name="wire"/>Wire</label>
     <label class="ambient"><input type="color" name="ambient">Ambient</label>

@@ -1,9 +1,11 @@
-import { Glb }    from "./glb.js"
+// import { Glb }    from "./glb.js"
+import { Fbx }    from "./fbx.js"
 import { Event }  from "./event.js"
 
 class Main{
   constructor(){
-    new Glb()
+    // new Glb()
+    new Fbx()
     new Event()
   }
 }

@@ -1,4 +1,8 @@
 #control{
+  --size-control-height : 40px;
+  --color-menu-hover : #333;
+
+
   height:var(--size-control-height);
   background-color:black;
 
@@ -8,11 +12,69 @@
   padding:10px; */
   margin:0;
   z-index:10;
-  display:flex;
-  gap:10px;
+  /* display:flex; */
+  /* gap:10px; */
 }
+
+#control ul,
+#control li{
+  margin:0;
+  padding:0;
+}
+
+/**
+ * Menu
+*/
+#control > ul{
+  display:flex;
+  gap:0px;
+  /* align-items:center; */
+  height:100%;
+}
+#control > ul > li{
+  list-style:none;
+  padding:0 10px;
+  cursor:pointer;
+  height:100%;
+  display:flex;
+  align-items:center;
+  position:relative;
+}
+#control > ul > li:hover{
+  background-color:#333;
+}
+
+/**
+ * Sub menu
+ */
+
+ #control > ul > li > input.sub-menu ~ ul{
+  display:none;
+ }
+
+ #control > ul > li > input.sub-menu:checked ~ ul{
+  display:flex;
+  flex-direction:column;
+  position:absolute;
+  top:100%;
+  left:0;
+ }
+
+ #control > ul > li > input.sub-menu:checked ~ ul > li{
+  background-color:black;
+  height:var(--size-control-height);
+  min-width:100px;
+  padding: 0 10px;
+  display:flex;
+  align-items:center;
+ }
+ #control > ul > li > input.sub-menu:checked ~ ul > li:hover{
+  background-color:var(--color-menu-hover);
+ }
+
+
 #control *{
-  font-size:12px;
+  font-size:0.8em;
 }
 
 #control > *{
@@ -43,6 +105,20 @@ label{
 [name="ambient"]{
   border:0;
   width:30px;
+}
+
+#control img,
+#control svg{
+  height:100%;
+}
+#control .logo{
+  padding:7px;
+}
+#control .logo img,
+#control .logo svg{
+  max-width : var(--size-control-height);
+  max-height : var(--size-control-height);
+  fill:white;
 }
 
 

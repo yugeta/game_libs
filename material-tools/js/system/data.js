@@ -10,10 +10,11 @@ export class Data{
   static mixer          = null
   static object_scale   = 1.0
   static object_pos     = { x:0, y:0, z:0 }
-  static root           = {
-    elm : document.getElementById("screen"),
-    bg_color : 0x444444,
-  }
+  // static root         = {
+  //   elm : document.getElementById("screen"),
+  //   bg_color : 0x444444,
+  // }
+  static screen_bg_color = 0x444444
 
   
 

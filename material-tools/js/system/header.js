@@ -26,7 +26,7 @@ export class Header{
     window.addEventListener("click" , this.click.bind(this))
   }
 
-  click(e){console.log(e)
+  click(e){
 
     if(e.pointerId !== 1){return}
 

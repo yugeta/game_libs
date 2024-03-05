@@ -1,7 +1,8 @@
 import * as THREE        from "three"
 import { OrbitControls } from "OrbitControls"
 import { Data }          from "../system/data.js"
-import { Render }        from "../3d/render.js"
+import { Elements }      from "../system/elements.js"
+// import { Render }        from "../3d/render.js"
 
 export class Camera{
 
@@ -12,16 +13,21 @@ export class Camera{
   static position   = {x:50, y:50, z:0}
 
   constructor(){
-    this.init()
-    this.grid()
-  }
+    // this.init()
+    // this.grid()
 
-  //カメラを作成
-  init(){
-    Camera.obj = new THREE.PerspectiveCamera(20, window.innerWidth/window.innerHeight, 0.1, 1000)
-    Camera.control = new OrbitControls(Camera.obj, Data.root.elm)
+    // カメラ作成
+    Camera.obj     = new THREE.PerspectiveCamera(20, window.innerWidth/window.innerHeight, 0.1, 1000)
+    Camera.control = new OrbitControls(Camera.obj, Elements.screen)
     Camera.pos()
   }
+
+  // //カメラを作成
+  // init(){
+  //   Camera.obj = new THREE.PerspectiveCamera(20, window.innerWidth/window.innerHeight, 0.1, 1000)
+  //   Camera.control = new OrbitControls(Camera.obj, Data.root.elm)
+  //   Camera.pos()
+  // }
 
   static pos(){
     Camera.obj.position.z = Camera.position.z
@@ -31,10 +37,10 @@ export class Camera{
     Camera.obj.lookAt(center_pos)
   }
 
-  grid(){
-    Camera.gridHelper = new THREE.GridHelper(50, 50, 0x888800)
-    Render.scene.add(Camera.gridHelper)
-  }
+  // grid(){
+  //   Camera.gridHelper = new THREE.GridHelper(50, 50, 0x888800)
+  //   Render.scene.add(Camera.gridHelper)
+  // }
 
   static click_grid(){
     if(Data.elm_grid_button.checked === true){

@@ -9,8 +9,7 @@ class Main{
   }
   load_asset(){
     new Asset([
-      "control.html",
-      "test.html"
+      "control.html"
     ]).promise.then(()=>{this.system_setting()})
   }
   system_setting(){

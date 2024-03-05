@@ -34,6 +34,7 @@ export class Control{
   constructor(){
     this.control()
     this.mesh_click()
+    this.set_event()
   }
 
   mesh_click(){
@@ -139,6 +140,22 @@ export class Control{
     Camera.obj.aspect = window.innerWidth / window.innerHeight
     Camera.obj.updateProjectionMatrix()
     Render.renderer.setSize( window.innerWidth, window.innerHeight )
+  }
+
+  set_event(){
+    window.addEventListener("click" , this.click.bind(this))
+  }
+
+  click(e){
+    if(e.target.closest(`#control ul li`)){return}
+    this.close_menus()
+  }
+
+  close_menus(){
+    const menus_inputs = document.querySelectorAll(`#control input[name="header_menu"]`)
+    for(const menus_input of menus_inputs){
+      menus_input.checked = false
+    }
   }
 
 }

@@ -13,8 +13,10 @@ export class Control{
   offset       = new THREE.Vector3()
   intersection = new THREE.Vector3()
 
-  elm_upload_button = document.querySelector(`[name="upload"]`)
-  elm_upload_file   = document.querySelector(`[name="glb"]`)
+  // elm_import_button = document.querySelector(`[name="import"]`)
+  get elm_import_file(){
+    return document.getElementById("import")
+  }
   elm_grid_button   = document.querySelector(`[name="grid"]`)
   elm_wire_button   = document.querySelector(`[name="wire"]`)
   elm_light_ambient = document.querySelector(`[name="ambient"]`)
@@ -125,8 +127,9 @@ export class Control{
 
   control(){
     window.addEventListener('resize'       , this.resize.bind(this)    , false)
-    this.elm_upload_button.addEventListener("click"  , ((e)=> {this.elm_upload_file.click(e)}))
-    this.elm_upload_file.addEventListener("change"   , ((e)=> new Model(e)))
+    // this.elm_import_button.addEventListener("click"  , ((e)=> {this.elm_upload_file.click(e)}))
+    // console.log(this.elm_import_file)
+    this.elm_import_file.addEventListener("change"   , ((e)=> new Model(e)))
     this.elm_grid_button.addEventListener("click"    , ((e)=> Camera.click_grid(e)))
     this.elm_wire_button.addEventListener("click"    , ((e)=> Model.click_wire(e.target.checked)))
     this.elm_light_ambient.addEventListener("change" , ((e)=> Light.change_ambient(e.target.value)))

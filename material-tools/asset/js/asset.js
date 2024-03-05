@@ -21,7 +21,8 @@ export class Asset{
 
   load(){
 		if(!this.files.length){
-			this.set_elmements()
+			// this.set_elements()
+      this.finish()
 			return
 		}
 		const file = this.files.shift()
@@ -29,19 +30,20 @@ export class Asset{
     const xhr  = new XMLHttpRequest()
     xhr.open("get" , `${this.dir}/${file}?${dt}` , true)
     // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-    // xhr.setRequestHeader("Content-Type", "text/html")
-		xhr.onload = this.loaded.bind(this,file)
+    xhr.setRequestHeader("Content-Type", "text/plane")
+		xhr.onload = this.loaded.bind(this, file)
     xhr.send()
   }
 
-  loaded(file,e){
-    if(file === "test.html"){
-    console.log(file,e.target.response)
-    }
+  loaded(file, e){
+    // if(file === "test.html"){
+    // // console.log(file,e.target.response)
+    // }
 		Asset.datas.push({
-			name : file,
+			name  : file,
 			value : e.target.response
 		})
+    this.set_element(file, e.target.response)
 		this.load()
   }
   // convert_string(str){
@@ -50,7 +52,7 @@ export class Asset{
   //   return str
   // }
 
-  set_scripts(elm){console.log(elm)
+  set_scripts(elm){
     const scripts = Array.from(elm.querySelectorAll('script'))
     this.set_script(scripts)
   }
@@ -108,14 +110,30 @@ export class Asset{
     if(check_login){return true}
   }
 
-  set_elmements(){
+  set_elements(){
     for(const asset of Asset.datas){
-      const id = asset.name.replace(/.html$/ , "")
-      const elm = document.getElementById(id)
-      if(!elm){continue}
-      elm.innerHTML = asset.value
-      this.set_scripts(elm)
+      this.set_element(asset.name, asset.value)
+      // const id = asset.name.replace(/.html$/ , "")
+      // const elm = document.getElementById(id)
+      // if(!elm){continue}
+      // elm.innerHTML = asset.value
+      // this.set_scripts(elm)
     }
-    this.finish()
+    // this.finish()
+  }
+  set_element(name, html){
+    const id = name.replace(/.html$/ , "")
+    const elm = document.getElementById(id)
+    if(!elm){return}
+    elm.innerHTML = html
+    this.remove_svg_script(elm)
+    this.set_scripts(elm)
+  }
+  remove_svg_script(elm){
+    const scripts = elm.querySelectorAll(`svg script`)
+    if(!scripts || !scripts.length){return}
+    for(const script of scripts){
+      script.parentNode.removeChild(script)
+    }
   }
 }

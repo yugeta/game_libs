@@ -5,14 +5,18 @@ import { Svg }     from "../asset/js/svg.js"
 
 class Main{
   constructor(){
+    this.load_asset()
+  }
+  load_asset(){
     new Asset([
       "control.html",
       "test.html"
-    ]).promise.then(()=>{
-      new Svg()
-      new Control()
-      // new Glb()
-    })
+    ]).promise.then(()=>{this.system_setting()})
+  }
+  system_setting(){
+    new Control()
+    new Svg()
+    
   }
 }
 

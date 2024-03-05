@@ -43,7 +43,8 @@ export class Svg{
 
     const xhr = new XMLHttpRequest()
     xhr.open('get' , src , true)
-    xhr.setRequestHeader('Content-Type', this.mime);
+    // xhr.setRequestHeader('Content-Type', this.mime);
+    xhr.setRequestHeader('Content-Type', "text/plane");
     xhr.onreadystatechange = ((elm , e) => {
       if(xhr.readyState !== XMLHttpRequest.DONE){return}
       const status = xhr.status;
@@ -55,16 +56,15 @@ export class Svg{
         else{
           this.loaded_svg(elm , e)
         }
-      // }
-      // else {
-      //   SvgImport.loaded_svg(elm , e)
       }
     }).bind(this , elm)
+    // xhr.onload = this.loaded_svg.bind(this, elm)
     xhr.send()
   }
   
 	loaded_svg(elm , res){
-    if(!res || !res.target.response){return}
+    if(!res || !res.target || !res.target.response){return}
+    // console.log(res.target.response)
     const parser = new DOMParser()
     let svg = parser.parseFromString(res.target.response, this.mime).querySelector('svg')
     this.copy_attributes(elm , svg)

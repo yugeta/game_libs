@@ -1,6 +1,7 @@
-import { Model }         from "../3d/model.js"
-import { Camera }        from "../3d/camera.js"
-import { Light }         from "../3d/light.js"
+import { Model }  from "../3d/model.js"
+import { Camera } from "../3d/camera.js"
+import { Light }  from "../3d/light.js"
+import { Grid }   from "../3d/grid.js"
 
 export class Header{
   get elm_import_file(){
@@ -16,10 +17,20 @@ export class Header{
   }
 
   control(){
-    this.elm_import_file.addEventListener("change"   , ((e)=> new Model(e)))
-    this.elm_grid_button.addEventListener("click"    , ((e)=> Camera.click_grid(e)))
+    this.elm_import_file.addEventListener("change"   , this.model_import.bind(this))
+    this.elm_grid_button.addEventListener("click"    , this.click_grid.bind(this))
     this.elm_wire_button.addEventListener("click"    , ((e)=> Model.click_wire(e.target.checked)))
     this.elm_light_ambient.addEventListener("change" , ((e)=> Light.change_ambient(e.target.value)))
+  }
+
+  click_grid(){
+    Grid.toggle()
+  }
+
+  model_import(e){
+    for(const file of e.target.files){
+      new Model(file)
+    }
   }
 
   set_event(){

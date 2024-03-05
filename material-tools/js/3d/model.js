@@ -1,35 +1,30 @@
 import * as THREE      from "three"
+import { GLTFLoader }  from "GLTFLoader"
 import { DRACOLoader } from "DRACOLoader"
 import { Data }        from "../system/data.js"
+import { Elements }    from "../system/elements.js"
 import { Render }      from "../3d/render.js"
 
 export class Model{
-  constructor(e){
-    this.read(e.target.files[0])
-  }
-
-  read(file){
+  constructor(file){
+    this.loader = new GLTFLoader()
     const read  = new FileReader();
-    read.onload = this.readed.bind(this)
+    read.onload = this.file_loaded.bind(this)
     read.readAsArrayBuffer(file)
   }
 
-  readed(e){
+  file_loaded(e){
     const data = e.target.result
     const buf = new Uint8Array(data);
     const blob = new Blob([buf], {type: "model/gltf-binary"})
     const url = URL.createObjectURL(blob)
-    // new Glb({
-    //   type : "glb_data",
-    //   url  : url,
-    // })
-    this.load(url)
+    this.model_load(url)
   }
 
-  load(url){
-    Data.loader.setCrossOrigin( 'anonymous' ) // r84 以降は明示的に setCrossOrigin() を指定する必要がある
-    Data.loader.setDRACOLoader( new DRACOLoader() )
-    Data.loader.load(
+  model_load(url){
+    this.loader.setCrossOrigin('anonymous') // r84 以降は明示的に setCrossOrigin() を指定する必要がある
+    this.loader.setDRACOLoader( new DRACOLoader() )
+    this.loader.load(
       url,
       this.loaded.bind(this),
       function(xhr){console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' )},
@@ -64,7 +59,7 @@ export class Model{
     }
     Render.scene.add(mesh)
     Data.mesh.push(mesh)
-    Model.click_wire(Data.elm_wire_button.checked)
+    Model.click_wire(Elements.wire.checked)
 
     // console.log(mesh.children[0].children[1].material.map)
     // // mesh.children[0].children[1].material.map.matrix.elements[6] = 1.0

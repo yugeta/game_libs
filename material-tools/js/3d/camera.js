@@ -10,7 +10,7 @@ export class Camera{
   static control    = null
   static gridHelper = null
   static center     = {x:0, y:0, z:0}
-  static position   = {x:50, y:50, z:0}
+  static position   = {x:50, y:30, z:50}
 
   constructor(){
     // this.init()
@@ -42,12 +42,12 @@ export class Camera{
   //   Render.scene.add(Camera.gridHelper)
   // }
 
-  static click_grid(){
-    if(Data.elm_grid_button.checked === true){
-      Camera.gridHelper.visible = true
-    }
-    else{
-      Camera.gridHelper.visible = false
-    }
-  }
+  // static click_grid(){
+  //   if(Data.elm_grid_button.checked === true){
+  //     Camera.gridHelper.visible = true
+  //   }
+  //   else{
+  //     Camera.gridHelper.visible = false
+  //   }
+  // }
 }

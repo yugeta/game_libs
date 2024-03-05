@@ -1,7 +1,10 @@
 import { Header }  from "./system/header.js"
-import { Screen }  from "./system/screen.js"
 import { Asset }   from "../asset/js/asset.js"
 import { Svg }     from "../asset/js/svg.js"
+import { Render }  from "./3d/render.js"
+import { Grid }    from "./3d/grid.js"
+import { Camera }  from "./3d/camera.js"
+import { Light }   from "./3d/light.js"
 
 class Main{
   constructor(){
@@ -17,7 +20,15 @@ class Main{
   system_setting(){
     new Header()
     new Svg()
-    new Screen()
+    this.screen()
+  }
+
+  screen(){
+    new Render()
+		new Camera()
+    new Light()
+		new Grid()
+    Render.view()
   }
 }
 

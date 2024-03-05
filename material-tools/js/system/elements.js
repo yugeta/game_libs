@@ -9,4 +9,16 @@ export class Elements{
 	static get screen(){
 		return document.getElementById("screen")
 	}
+
+	static get grid(){
+		return document.querySelector(`[name="grid"]`)
+	}
+
+	static get wire(){
+		return document.querySelector(`[name="wire"]`)
+	}
+
+	static get ambient(){
+		return document.querySelector(`[name="ambient"]`)
+	}
 }

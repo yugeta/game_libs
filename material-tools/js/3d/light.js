@@ -1,5 +1,6 @@
 import * as THREE      from "three"
 import { Data }        from "../system/data.js"
+import { Elements }    from "../system/elements.js"
 import { Render }      from "../3d/render.js"
 
 export class Light{
@@ -26,16 +27,13 @@ export class Light{
   }
 
   constructor(){
-    this.init()
+    Elements.ambient.value = Light.ambient.color
+
     this.set_ambient()
     this.set_light()
     this.view_light()
     this.view_light_line()
     
-  }
-
-  init(){
-    Light.ambient.elm.value = Light.ambient.color
   }
 
   set_light(){
@@ -74,9 +72,7 @@ export class Light{
     Render.scene.add(line)  }
 
   set_ambient(){
-    const color = Data.color(Light.ambient.elm.value)
-    Light.ambient.obj = new THREE.AmbientLight(color , Light.ambient.intensity)
-    Render.scene.add(Light.ambient.obj)
+    
   }
 
   static change_ambient(color , intensity){

@@ -121,6 +121,7 @@ export class Asset{
     }
     // this.finish()
   }
+
   set_element(name, html){
     const id = name.replace(/.html$/ , "")
     const elm = document.getElementById(id)
@@ -129,6 +130,7 @@ export class Asset{
     this.remove_svg_script(elm)
     this.set_scripts(elm)
   }
+  
   remove_svg_script(elm){
     const scripts = elm.querySelectorAll(`svg script`)
     if(!scripts || !scripts.length){return}

@@ -1,5 +1,5 @@
-import { Glb }     from "./3d/glb.js"
-import { Control } from "./system/control.js"
+import { Header }  from "./system/header.js"
+import { Screen }  from "./system/screen.js"
 import { Asset }   from "../asset/js/asset.js"
 import { Svg }     from "../asset/js/svg.js"
 
@@ -7,15 +7,17 @@ class Main{
   constructor(){
     this.load_asset()
   }
+  
   load_asset(){
     new Asset([
       "control.html"
     ]).promise.then(()=>{this.system_setting()})
   }
+
   system_setting(){
-    new Control()
+    new Header()
     new Svg()
-    
+    new Screen()
   }
 }
 

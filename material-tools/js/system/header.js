@@ -12,8 +12,16 @@ export class Header{
   elm_light_ambient = document.querySelector(`[name="ambient"]`)
 
   constructor(){
-    this.control()
     this.set_event()
+    this.control()
+  }
+
+  set_event(){
+    window.addEventListener("click" , this.click_header.bind(this))
+    const header_menus = document.querySelectorAll(`header > ul > li`)
+    for(const header_menu of header_menus){
+      header_menu.addEventListener("mouseover" , this.mouseover_header.bind(this))
+    }
   }
 
   control(){
@@ -33,37 +41,45 @@ export class Header{
     }
   }
 
-  set_event(){
-    window.addEventListener("click" , this.click.bind(this))
+  click_header(e){
+    const target = e.target
+    const li     = target.closest(`header > ul li`)
+    this.header_menu_toggle(li)
+    this.header_menu_toggle_flg = li && li.hasAttribute("data-open") ? true : false
   }
 
-  click(e){
+  mouseover_header(e){
+    if(this.header_menu_toggle_flg !== true){return}
+    const target = e.target
+    const li     = target.closest(`header > ul > li`)
+    if(!li || li.hasAttribute("data-open")){return}
+    this.header_menu_toggle(li)
+  }
 
-    if(e.pointerId !== 1){return}
-
-    const elm = e.target.closest(`#control ul li`)
-    
-    if(elm){
-      // if(e.target.closest(`#control ul li label`)){
-        const input = elm.querySelector(`input.sub-menu`)
-        // console.log(input)
-        // if(input && input.checked === true){
-        //   // console.log(input.checked)
-        //   // input.checked = false
-        // }
-        this.close_menus(input)
-      // }
+  header_menu_toggle(li){
+    if(li){
+      li.toggleAttribute("data-open")
+      this.close_menus(li)
     }
     else{
       this.close_menus()
     }
   }
 
-  close_menus(exlusion_input){
-    const menus_inputs = document.querySelectorAll(`#control input.sub-menu`)
-    for(const menus_input of menus_inputs){
-      if(exlusion_input && exlusion_input === menus_input){continue}
-      menus_input.checked = false
+  close_menus(exlusion_li){
+    const li_arr = document.querySelectorAll(`header ul.lists li`)
+    for(const li of li_arr){
+      if(exlusion_li && exlusion_li === li){continue}
+      if(!li.hasAttribute("data-open")){continue}
+      if(this.include_element(li, exlusion_li)){continue}
+      li.removeAttribute("data-open")
+    }
+  }
+
+  include_element(parent_elm , target_elm){
+    const li_arr = parent_elm.querySelectorAll(`li`)
+    for(const li of li_arr){
+      if(li === target_elm){return true}
     }
   }
 

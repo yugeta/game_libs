@@ -20,7 +20,7 @@ class Main{
   
   load_asset(){
     new Asset([
-      "control.html"
+      "header.html"
     ]).promise.then(()=>{this.system_setting()})
   }
 

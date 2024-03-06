@@ -1,5 +1,6 @@
 @import "logo.css";
-@import "control.css";
+@import "header.css";
+/* @import "control.css"; */
 @import "screen.css";
 
 html,body,#screen{

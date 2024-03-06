@@ -10,6 +10,16 @@ header{
   user-select: none;
 }
 
+header *{
+  font-size:var(--size-font);
+}
+
+header > *{
+  background-color:black;
+  color:white;
+  border-radius:5px;
+  padding:10px;
+}
 
 header ul,
 header li{
@@ -70,23 +80,32 @@ header li[data-open] > ul > li{
   padding: 0;
   display:flex;
   align-items:center;
+  position:relative;
 }
 header li[data-open] > ul > li:hover{
   background-color:var(--color-menu-hover);
 }
 
-
-header *{
-  font-size:var(--size-font);
+header li[data-open] > ul > li:has(ul)::after{
+  content:">";
+  position:absolute;
+  right:10px;
 }
 
-header > *{
-  background-color:black;
-  color:white;
-  border-radius:5px;
-  padding:10px;
+
+/**
+ * Under-Layer-menu
+ */
+header > ul > li > ul li[data-open] > ul{
+  top:0;
+  left:100%;
 }
 
+
+
+/**
+ * Button
+ */
 
 button[name="upload"]{
   border:0;

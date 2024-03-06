@@ -1,14 +1,9 @@
 import { Model }  from "../3d/model.js"
-import { Camera } from "../3d/camera.js"
-import { Light }  from "../3d/light.js"
-import { Grid }   from "../3d/grid.js"
 
 export class Header{
   get elm_import_file(){
     return document.getElementById("import")
   }
-  // elm_grid_button   = document.querySelector(`[name="grid"]`)
-  // elm_wire_button   = document.querySelector(`[name="wire"]`)
 
   constructor(){
     this.set_event()
@@ -21,12 +16,6 @@ export class Header{
       header_menu.addEventListener("mouseover" , this.mouseover_header.bind(this))
     }
     this.elm_import_file.addEventListener("change"   , this.model_import.bind(this))
-    // this.elm_grid_button.addEventListener("click"    , this.click_grid.bind(this))
-    // this.elm_wire_button.addEventListener("click"    , ((e)=> Model.click_wire(e.target.checked)))
-  }
-
-  click_grid(){
-    Grid.toggle()
   }
 
   model_import(e){

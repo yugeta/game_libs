@@ -2,6 +2,7 @@
 @import "header.css";
 /* @import "control.css"; */
 @import "screen.css";
+@import "models.css";
 
 html,body,#screen{
   margin:0;

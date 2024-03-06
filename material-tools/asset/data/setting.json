@@ -1,4 +1,26 @@
 {
-	"screen_bg_color" : "0x444444"
+	"screen" : {
+		"bg_color" : "0x444444"
+	},
+	"light" : {
+		"name"  : "direct_light",
+    "obj"   : null,
+    "color" : "#FFFFFF",
+    "color_select" : "#FF0000",
+    "pos" : {
+      "x" : 5,
+      "y" : 7,
+      "z" : 5
+    },
+    "segment"   : 8,
+    "size"      : 0.3,
+    "line_name" : "direct-light-line"
+	},
+	"ambient" : {
+		"obj"       : null,
+    "color"     : "#ffffff",
+    "elm"       : null,
+    "intensity" : 1.0
+	}
 
 }

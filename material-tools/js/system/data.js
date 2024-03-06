@@ -2,6 +2,7 @@ import * as THREE      from "three"
 
 export class Data{
   static assets         = []
+  static setting        = {}
 
   static clock          = null
   static texture        = null

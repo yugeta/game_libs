@@ -26,7 +26,7 @@ export class Data{
     catch(err){
       console.warn(err)
     }
-    this.finish
+    this.finish()
   }
 
   finish(){

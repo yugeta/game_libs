@@ -1,6 +1,38 @@
 import * as THREE      from "three"
+import { Jsonc } from "../../asset/js/jsonc.js"
 
 export class Data{
+  constructor(){
+    this.promise = new Promise((resolve, reject)=>{
+      this.resolve = resolve
+      this.reject  = reject
+      this.load_setting()
+    })
+  }
+
+  load_setting(){
+    const xhr = new XMLHttpRequest()
+    xhr.withCredentials = true
+    xhr.open('GET' , 'data/setting.json' , true)
+    xhr.setRequestHeader("Content-Type", "text/json")
+    xhr.onload = this.loaded_setting.bind(this)
+    xhr.send()
+  }
+
+  loaded_setting(e){
+    try{
+      Data.setting = new Jsonc(e.target.response).json
+    }
+    catch(err){
+      console.warn(err)
+    }
+    this.finish
+  }
+
+  finish(){
+    this.resolve()
+  }
+
   static assets         = []
   static setting        = {}
 

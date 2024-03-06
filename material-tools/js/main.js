@@ -1,4 +1,5 @@
 import { Header }  from "./system/header.js"
+import { Data }    from "./system/data.js"
 import { Asset }   from "../asset/js/asset.js"
 import { Svg }     from "../asset/js/svg.js"
 import { Render }  from "./3d/render.js"
@@ -8,7 +9,13 @@ import { Light }   from "./3d/light.js"
 
 class Main{
   constructor(){
-    this.load_asset()
+    this.load_data()
+  }
+
+  load_data(){
+    new Data().promise.then(()=>{
+      this.load_asset()
+    })
   }
   
   load_asset(){

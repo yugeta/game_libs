@@ -7,15 +7,23 @@ import { Render }      from "../3d/render.js"
 
 export class Model{
   constructor(file){
-    this.loader = new GLTFLoader()
-    const read  = new FileReader();
-    read.onload = this.file_loaded.bind(this)
-    read.readAsArrayBuffer(file)
-    this.set_event()
+    this.promise = new Promise((resolve , reject) => {
+      this.resolve = resolve
+      this.reject  = reject
+      this.loader  = new GLTFLoader()
+      this.file_load(file)
+      this.set_event()
+    })
   }
 
   set_event(){
     Elements.wire.addEventListener("click"    , ((e)=>{this.click_wire(Elements.wire.checked)}))
+  }
+
+  file_load(file){
+    const read  = new FileReader();
+    read.onload = this.file_loaded.bind(this)
+    read.readAsArrayBuffer(file)
   }
 
   file_loaded(e){
@@ -31,13 +39,14 @@ export class Model{
     this.loader.setDRACOLoader( new DRACOLoader() )
     this.loader.load(
       url,
-      this.loaded.bind(this),
+      this.model_loaded.bind(this),
       function(xhr){console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' )},
       function(error){console.log( 'An error happened' )}
     )
   }
 
-  loaded(gltf){console.log(gltf)
+  model_loaded(gltf){
+    //console.log(gltf)
     const mesh = gltf.scene
 
     // transform
@@ -103,6 +112,7 @@ export class Model{
         // console.log("Group: ",object)
       }
     })
+    this.finish()
   }
 
   anim(object){
@@ -123,6 +133,34 @@ export class Model{
           obj3d.material.forEach(function(mat, idx){
             mat.wireframe = flg
           })
+        }
+      })
+    }
+  }
+
+  finish(){
+    this.view_lists()
+    this.resolve()
+  }
+
+  view_lists(){
+    this.view_list(Data.mesh)
+  }
+  view_list(lists){
+    for(const mesh of Data.mesh){
+      mesh.traverse(object => {
+        if(object.isMesh){
+          if(object.material.map
+          && object.material.map.isTexture){
+            console.log(object)
+          }
+        }
+        else if(object.isGroup){
+          console.log("Group: ",object)
+        }
+
+        if(object.children){
+          // this.view_list(object.children)
         }
       })
     }

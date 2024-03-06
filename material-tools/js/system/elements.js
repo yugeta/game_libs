@@ -25,4 +25,8 @@ export class Elements{
 	static get light(){
 		return document.querySelector(`[name="light"]`)
 	}
+
+	static get models(){
+		return document.querySelector("models ul")
+	}
 }

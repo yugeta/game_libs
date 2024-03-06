@@ -11,6 +11,11 @@ export class Model{
     const read  = new FileReader();
     read.onload = this.file_loaded.bind(this)
     read.readAsArrayBuffer(file)
+    this.set_event()
+  }
+
+  set_event(){
+    Elements.wire.addEventListener("click"    , ((e)=>{this.click_wire(Elements.wire.checked)}))
   }
 
   file_loaded(e){
@@ -59,7 +64,7 @@ export class Model{
     }
     Render.scene.add(mesh)
     Data.mesh.push(mesh)
-    Model.click_wire(Elements.wire.checked)
+    this.click_wire(Elements.wire.checked)
 
     // console.log(mesh.children[0].children[1].material.map)
     // // mesh.children[0].children[1].material.map.matrix.elements[6] = 1.0
@@ -108,7 +113,7 @@ export class Model{
   }
 
   // ワイヤーフレーム化(戻す)
-  static click_wire(flg){
+  click_wire(flg){
     for(const obj of Data.mesh){
       obj.traverse((obj3d) => {
         if(obj3d.material){

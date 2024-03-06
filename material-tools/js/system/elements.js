@@ -21,4 +21,8 @@ export class Elements{
 	static get ambient(){
 		return document.querySelector(`[name="ambient"]`)
 	}
+
+	static get light(){
+		return document.querySelector(`[name="light"]`)
+	}
 }

@@ -14,7 +14,8 @@
     },
     "segment"   : 8,
     "size"      : 0.3,
-    "line_name" : "direct-light-line"
+    "line_name" : "direct-light-line",
+    "opacity"   : 0.5
 	},
 	"ambient" : {
 		"obj"       : null,

@@ -35,19 +35,11 @@ export class Light{
   intersection = new THREE.Vector3()
 
   constructor(){
-    Elements.ambient.value = Data.setting.ambient.color
-
-    this.set_ambient()
     this.set_light()
     this.view_light()
     this.view_light_line()
     this.set_event()
-  }
-
-  set_ambient(){
-    const color = Common.color(Elements.ambient.value)
-    Data.setting.ambient.obj = new THREE.AmbientLight(color , Data.setting.ambient.intensity)
-    Render.scene.add(Data.setting.ambient.obj)
+    Light.toggle()
   }
 
   set_light(){
@@ -61,7 +53,7 @@ export class Light{
     const geometry = new THREE.SphereGeometry(Data.setting.light.size, Data.setting.light.segment, Data.setting.light.segment)
     const material = new THREE.MeshBasicMaterial({
       color   : Common.color(Data.setting.light.color),
-      opacity : 0.5,
+      opacity : Data.setting.light.opacity,
       transparent: true,
     })
     const sphere   = new THREE.Mesh(geometry, material)
@@ -78,7 +70,7 @@ export class Light{
     const geometry = new THREE.BufferGeometry().setFromPoints(points)
     const material = new THREE.LineBasicMaterial({
       color   : color,
-      opacity : 0.5,
+      opacity : Data.setting.light.opacity,
       transparent: true,
     })
     const line = new THREE.Line(geometry, material)
@@ -91,6 +83,7 @@ export class Light{
     Elements.screen.addEventListener('mousedown', this.mousedown.bind(this))
     Elements.screen.addEventListener('mousemove', this.mousemove.bind(this))
     Elements.screen.addEventListener('mouseup'  , this.mouseup.bind(this))
+    Elements.light.addEventListener("change"      , (()=>{Light.toggle()}))
   }
 
 
@@ -144,15 +137,11 @@ export class Light{
     }
   }
 
-  static change_ambient(color , intensity){
-    color     = color || Data.setting.ambient.color
-    intensity = intensity || Data.setting.ambient.intensity
-    Data.setting.ambient.obj.color     = Common.color(color)
-    Data.setting.ambient.obj.intensity = intensity
-  }
-
   static get sphere(){
     return Render.scene.children.find(e => e.name === Data.setting.light.name)
+  }
+  static get sphere_line(){
+    return Render.scene.children.find(e => e.name === Data.setting.light.line_name)
   }
 
   static set_direct_pos(pos){
@@ -175,4 +164,15 @@ export class Light{
     line_position.needsUpdate = true;
   }
 
+  static toggle(){
+    const flg = Elements.light.checked
+    if(flg){
+      Light.sphere.material.opacity = Data.setting.light.opacity
+      Light.sphere_line.material.opacity = Data.setting.light.opacity
+    }
+    else{
+      Light.sphere.material.opacity = 0
+      Light.sphere_line.material.opacity = 0
+    }
+  }
 }

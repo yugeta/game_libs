@@ -9,11 +9,9 @@ export class Header{
   }
   elm_grid_button   = document.querySelector(`[name="grid"]`)
   elm_wire_button   = document.querySelector(`[name="wire"]`)
-  elm_light_ambient = document.querySelector(`[name="ambient"]`)
 
   constructor(){
     this.set_event()
-    this.control()
   }
 
   set_event(){
@@ -22,13 +20,9 @@ export class Header{
     for(const header_menu of header_menus){
       header_menu.addEventListener("mouseover" , this.mouseover_header.bind(this))
     }
-  }
-
-  control(){
     this.elm_import_file.addEventListener("change"   , this.model_import.bind(this))
     this.elm_grid_button.addEventListener("click"    , this.click_grid.bind(this))
     this.elm_wire_button.addEventListener("click"    , ((e)=> Model.click_wire(e.target.checked)))
-    this.elm_light_ambient.addEventListener("change" , ((e)=> Light.change_ambient(e.target.value)))
   }
 
   click_grid(){

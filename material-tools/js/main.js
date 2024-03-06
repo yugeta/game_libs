@@ -6,6 +6,7 @@ import { Render }  from "./3d/render.js"
 import { Grid }    from "./3d/grid.js"
 import { Camera }  from "./3d/camera.js"
 import { Light }   from "./3d/light.js"
+import { Ambient } from "./3d/ambient.js"
 
 class Main{
   constructor(){
@@ -34,6 +35,7 @@ class Main{
     new Render()
 		new Camera()
     new Light()
+    new Ambient()
 		new Grid()
     Render.view()
   }

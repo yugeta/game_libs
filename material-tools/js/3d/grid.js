@@ -1,6 +1,6 @@
 import * as THREE   from "three"
 import { Render }   from "../3d/render.js"
-import { Model }    from "../3d/model.js"
+// import { Model }    from "../3d/model.js"
 import { Elements } from "../system/elements.js"
 
 export class Grid{

@@ -1,4 +1,6 @@
-import { Model }  from "../3d/model.js"
+import { Model }    from "../3d/model.js"
+import { Camera }   from "../3d/camera.js"
+import { Elements } from "../system/elements.js"
 
 export class Header{
   get elm_import_file(){
@@ -10,12 +12,24 @@ export class Header{
   }
 
   set_event(){
+    Elements.menu_new.addEventListener("click" , this.click_new.bind(this))
     window.addEventListener("click" , this.click_header.bind(this))
     const header_menus = document.querySelectorAll(`header > ul > li`)
     for(const header_menu of header_menus){
       header_menu.addEventListener("mouseover" , this.mouseover_header.bind(this))
     }
-    this.elm_import_file.addEventListener("change"   , this.model_import.bind(this))
+    this.elm_import_file.addEventListener("change"  , this.model_import.bind(this))
+    Elements.models.addEventListener("mouseover" , this.models_scroll_on.bind(this))
+    Elements.models.addEventListener("mouseout"  , this.models_scroll_off.bind(this))
+    Elements.models_resize.addEventListener("mouseover" , this.models_scroll_on.bind(this))
+    Elements.models_resize.addEventListener("mouseout"  , this.models_scroll_off.bind(this))
+    Elements.models_resize.addEventListener("mousedown" , this.models_resize_down.bind(this))
+    Elements.models_resize.addEventListener("mousemove" , this.models_resize_move.bind(this))
+    Elements.models_resize.addEventListener("mouseup"   , this.models_resize_up.bind(this))
+  }
+
+  click_new(){
+    location.reload()
   }
 
   model_import(e){
@@ -64,6 +78,22 @@ export class Header{
     for(const li of li_arr){
       if(li === target_elm){return true}
     }
+  }
+
+  models_scroll_on(){
+    Camera.control.enabled = false
+  }
+  models_scroll_off(){
+    Camera.control.enabled = true
+  }
+  models_resize_down(e){
+
+  }
+  models_resize_move(e){
+
+  }
+  models_resize_up(e){
+
   }
 
 }

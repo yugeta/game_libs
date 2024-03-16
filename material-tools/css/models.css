@@ -2,6 +2,7 @@
 	position:absolute;
 	top:10px;
   left:10px;
+	width:150px;
   min-width:100px;
   min-height:40px;
 	background-color:rgba(0,0,0,0.5);
@@ -24,6 +25,8 @@
 	font-size:10px;
 	display:flex;
 	flex-direction:column;
+	height:200px;
+	overflow:auto;
 }
 #models li{
 	list-style:none;
@@ -39,6 +42,32 @@
 }
 #models li:hover{
 	background-color:#444;
+}
+
+/* スクロールバー全体 */
+#models ul::-webkit-scrollbar {
+	width: 10px;
+}
+/* スクロールバー背景 */
+#models ul::-webkit-scrollbar-track {
+	background: #333;
+	box-shadow: inset 0 0 2px #777;
+}
+/* スクロールバーつまみ */
+#models ul::-webkit-scrollbar-thumb {
+	background: #3b5d82;
+}
+
+/* Resize */
+#models .resize{
+	position:absolute;
+	right:-1px;
+	bottom:-1px;
+	width:10px;
+	height:10px;
+	background-color:transparent;
+	z-index:10;
+	cursor:nwse-resize;
 }
 
 

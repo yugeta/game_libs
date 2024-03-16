@@ -144,23 +144,32 @@ export class Model{
   }
 
   view_lists(){
+    this.num = 1
+    console.log(Data.mesh)
     this.view_list(Data.mesh)
   }
   view_list(lists){
-    for(const mesh of Data.mesh){
+    for(const mesh of lists){
       mesh.traverse(object => {
-        if(object.isMesh){
-          if(object.material.map
-          && object.material.map.isTexture){
-            console.log(object)
-          }
+        if(object.isMesh && !object.isSkinnedMesh){
+          // if(object.material.map
+          // && object.material.map.isTexture){
+          //   console.log(object)
+          // }
+          // this.view_list(object.children)
+          console.log("Mesh : ",object)
+          const li = document.createElement("li")
+          const num = this.num++
+          li.setAttribute("data-uuid", object.uuid)
+          li.textContent = `${num} : ${object.name}`
+          Elements.models.appendChild(li)
         }
         else if(object.isGroup){
-          console.log("Group: ",object)
+          // console.log("Group: ",object)
         }
 
         if(object.children){
-          // this.view_list(object.children)
+          this.view_list(object.children)
         }
       })
     }

@@ -2,6 +2,10 @@
 
 export class Elements{
 
+	static get menu_new(){
+		return document.querySelector(`header .lists .new`)
+	}
+
 	static get control(){
 		return document.getElementById("control")
 	}
@@ -27,6 +31,9 @@ export class Elements{
 	}
 
 	static get models(){
-		return document.querySelector("models ul")
+		return document.querySelector("#models ul")
+	}
+	static get models_resize(){
+		return document.querySelector("#models .resize")
 	}
 }

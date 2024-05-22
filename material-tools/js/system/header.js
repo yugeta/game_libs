@@ -1,10 +1,20 @@
-import { Model }    from "../3d/model.js"
-import { Camera }   from "../3d/camera.js"
-import { Elements } from "../system/elements.js"
+import { Import }     from "../system/header/import.js"
+import { Export }     from "../system/header/export.js"
+import { Camera }     from "../3d/camera.js"
+import { Elements }   from "../system/elements.js"
+
+/**
+ * Header
+ * - 上部メニュー操作のイベント処理
+ * 
+ */
 
 export class Header{
   get elm_import_file(){
     return document.getElementById("import")
+  }
+  get elm_export(){
+    return document.querySelector(".export")
   }
 
   constructor(){
@@ -18,9 +28,19 @@ export class Header{
     for(const header_menu of header_menus){
       header_menu.addEventListener("mouseover" , this.mouseover_header.bind(this))
     }
+
+    // import
     this.elm_import_file.addEventListener("change"  , this.model_import.bind(this))
+
+    // export
+    this.elm_export.addEventListener("click"  , this.model_export.bind(this))
+    // this.elm_export.onclick = this.model_export.bind(this)
+
+    // 
     Elements.models.addEventListener("mouseover" , this.models_scroll_on.bind(this))
     Elements.models.addEventListener("mouseout"  , this.models_scroll_off.bind(this))
+    Elements.materials.addEventListener("mouseover" , this.models_scroll_on.bind(this))
+    Elements.materials.addEventListener("mouseout"  , this.models_scroll_off.bind(this))
     Elements.models_resize.addEventListener("mouseover" , this.models_scroll_on.bind(this))
     Elements.models_resize.addEventListener("mouseout"  , this.models_scroll_off.bind(this))
     Elements.models_resize.addEventListener("mousedown" , this.models_resize_down.bind(this))
@@ -32,10 +52,18 @@ export class Header{
     location.reload()
   }
 
+  // import file
   model_import(e){
-    for(const file of e.target.files){
-      new Model(file)
-    }
+    // for(const file of e.target.files){
+    //   new Model(file)
+    // }
+    new Import(e.target.files)
+  }
+
+  // export (download)
+  model_export(e){
+    new Export()
+    this.close_menus()
   }
 
   click_header(e){

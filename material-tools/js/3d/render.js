@@ -2,6 +2,7 @@ import * as THREE      from "three"
 import { Data }        from "../system/data.js"
 import { Elements }    from "../system/elements.js"
 import { Camera }      from "../3d/camera.js"
+import { Material }    from "../3d/material.js"
 
 export class Render{
   static renderer = null
@@ -41,6 +42,15 @@ export class Render{
     if(Data.mixer){
       Data.mixer.update(Render.clock.getDelta())
     }
+    // Render.material_animations()
+    Material.animation()
     Render.renderer.render(Render.scene, Camera.obj)
   }
+
+  // static material_animations(){
+  //   if(!Data.material_animations.length){return}
+  //   for(const object of Data.material_animations){
+  //     Material.animation(object)
+  //   }
+  // }
 }

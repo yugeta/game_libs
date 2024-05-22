@@ -1,4 +1,4 @@
-
+import { Data } from "../system/data.js"
 
 export class Elements{
 
@@ -33,7 +33,13 @@ export class Elements{
 	static get models(){
 		return document.querySelector("#models ul")
 	}
+
 	static get models_resize(){
 		return document.querySelector("#models .resize")
 	}
+
+	static get materials(){
+		return document.querySelector("#materials ul")
+	}
+	
 }

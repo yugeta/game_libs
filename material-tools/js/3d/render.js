@@ -19,12 +19,16 @@ export class Render{
     Render.clock    = new THREE.Clock();
     Render.scene    = new THREE.Scene()
     Render.renderer = new THREE.WebGLRenderer()
-    Render.renderer.setSize(this.screen_size.w, this.screen_size.h)
+    this.set_screen()
     Elements.screen.appendChild(Render.renderer.domElement)
     // //背景色を設定
     Render.renderer.setClearColor(Data.screen_bg_color, 1)
   }
 
+  set_screen(){
+    // Render.renderer.setPixelRatio(window.devicePixelRatio);
+    Render.renderer.setSize(this.screen_size.w, this.screen_size.h)
+  }
   
 
   // //レンダラーを作成

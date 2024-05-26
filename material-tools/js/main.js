@@ -34,11 +34,11 @@ class Main{
   }
 
   screen(){
-    new Render()
-		new Camera()
-    new Light()
-    new Ambient()
-		new Grid()
+    Data.render  = new Render()
+		Data.camera  = new Camera()
+    Data.light   = new Light()
+    Data.ambient = new Ambient()
+		Data.grid    = new Grid()
     Render.view()
   }
 }

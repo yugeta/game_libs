@@ -22,6 +22,14 @@ export class Camera{
     Camera.pos()
   }
 
+  // window resize
+  resize(){
+    // if(!Data.camera){return}
+    // console.log(Data.camera)
+    Camera.obj.aspect = Data.render.screen_size.w / Data.render.screen_size.h
+    Camera.obj.updateProjectionMatrix()
+  }
+
   // //カメラを作成
   // init(){
   //   Camera.obj = new THREE.PerspectiveCamera(20, window.innerWidth/window.innerHeight, 0.1, 1000)

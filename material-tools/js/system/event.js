@@ -11,6 +11,7 @@ export class Event{
     if(Elements.materials){
 			Elements.materials.addEventListener("click" , this.click_materials.bind(this))
 		}
+		window.addEventListener("resize" , this.resize_window.bind(this))
   }
 
 	click_models(e){
@@ -34,4 +35,9 @@ export class Event{
 		if(!elm){return}
     Data.materials.click(e)
   }
+
+	resize_window(){
+		Data.render.set_screen()
+		Data.camera.resize()
+	}
 }

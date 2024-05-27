@@ -3,7 +3,7 @@ import { Data }        from "../system/data.js"
 import { Elements }    from "../system/elements.js"
 import { Camera }      from "../3d/camera.js"
 import { Material }    from "../3d/material.js"
-import { Outline }     from "../3d/outline.js"
+// import { Outline }     from "../3d/outline.js"
 
 export class Render{
   static renderer = null
@@ -22,27 +22,11 @@ export class Render{
 
     Render.scene     = new THREE.Scene()
     Render.renderer  = new THREE.WebGLRenderer({ antialias: true, alpha: true })
-    // Outline.gl       = Render.renderer.getContext()
-    // Render.renderer.setClearColor( 0x000000, 0 )
     Render.renderer.autoClear = false
     Render.renderer.setPixelRatio( window.devicePixelRatio )
     this.set_screen(Render.renderer)
     Elements.screen.appendChild(Render.renderer.domElement)
 
-    // Outline.scene    = new THREE.Scene()
-    // Outline.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
-    // Outline.gl       = Render.renderer.getContext()
-    // Outline.renderer.autoClear = false
-    // Outline.renderer.setPixelRatio( window.devicePixelRatio )
-    // this.set_screen(Outline.renderer)
-    // Elements.screen.appendChild(Outline.renderer.domElement)
-    Outline.scene    = new THREE.Scene()
-    // Outline.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false })
-    Outline.gl       = Render.renderer.getContext()
-    // Outline.renderer.autoClear = false
-    // Outline.renderer.setPixelRatio( window.devicePixelRatio )
-    // this.set_screen(Outline.renderer)
-    // Elements.screen.appendChild(Outline.renderer.domElement)
     
     // //背景色を設定
     Render.renderer.setClearColor(Data.screen_bg_color, 1)
@@ -86,7 +70,7 @@ export class Render{
     // Render.gl.colorMask(false, false, false, false)
     
     // Outline.gl.enable(Outline.gl.STENCIL_TEST)
-    Outline.gl.depthMask(true)
+    // Outline.gl.depthMask(true)
     // Outline.gl.stencilFunc(Outline.gl.EQUAL, 0, ~0)
     // Outline.gl.stencilOp(Outline.gl.KEEP, Outline.gl.KEEP, Outline.gl.KEEP)
     // Outline.gl.stencilOp(Outline.gl.KEEP, Outline.gl.REPLACE, Outline.gl.REPLACE)
@@ -95,7 +79,7 @@ export class Render{
     // Outline.renderer.render(Outline.scene, Camera.obj)
     // Outline.gl.enable(Outline.gl.STENCIL_TEST)
     // Outline.gl.depthMask(false)
-    Render.renderer.render(Outline.scene, Camera.obj)
+    // Render.renderer.render(Outline.scene, Camera.obj)
 
     Material.animation()
   }

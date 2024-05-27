@@ -7,59 +7,49 @@ export class Outline{
   static renderer = null
   static model    = null
   static gl       = null
+  static current_uuid  = null
 
   constructor(model){
-    // this.model
-    this.model = model.clone()
-    this.model.traverse(function (child) {
-      // if (child.isMesh) {
-      //   // console.log(child)
-      //   // オブジェクトを単一色にする
-      //   child.material = new THREE.MeshBasicMaterial({ color: 0xFFFFFF })
-      //   // child.material = new THREE.MeshBasicMaterial({ color: 0x000000 })
-      //   // child.position.x += 0.2
-      // }
-      if ( child.isMesh ) {
-        child.material = new THREE.ShaderMaterial({
-          vertexShader: document.getElementById('vshader').textContent,
-          fragmentShader: document.getElementById('fshader').textContent,
-        });
+    if(model.uuid === Outline.current_uuid){return}
+    model.traverse((child) => {
+      if(child.isMesh) {
+        const outlineMesh = new THREE.Mesh(child.geometry, this.shaderMaterial)
+        outlineMesh.isOutline = true
+        outlineMesh.position.copy(child.position)
+        outlineMesh.rotation.copy(child.rotation)
+        outlineMesh.scale.copy(child.scale).multiplyScalar(1.05)  // オブジェクトを少し拡大してアウトラインを作成
+        model.add(outlineMesh)
       }
     })
-    // console.log(this.model)
-    // this.model.position.x += 1
-    this.model.scale.set(1.05, 1.05, 1.05)
-
-    Outline.scene.add(this.model)
-    // Outline.scene = new THREE.Scene()
-    // Outline.scene.add(objectStencil)
-
-    // Outline.renderer = new THREE.WebGLRenderer()
-    // Render.renderer.clear();
-    // Render.renderer.render(Outline.scene, Camera.obj)
-
-
-    
-
-    // Render.scene.add(objectStencil)
-
-    // model.traverse(function (child) {
-    //   if (child.isMesh) {
-    //     child.material = new THREE.ShaderMaterial({
-    //       vertexShader: document.getElementById('vshader').textContent,
-    //       fragmentShader: document.getElementById('fshader').textContent,
-    //     })
-    //   }
-    // )}
+    Outline.current_uuid = model.uuid
   }
 
-  // static get scene(){
-  //   if(Outline.scene_data){
-  //     return Outline.scene_data
-  //   }
-  //   else{
-  //     new THREE.Scene()
-  //   }
-  // }
+  // シェーダーマテリアルの作成
+  get shaderMaterial(){
+    return new THREE.ShaderMaterial({
+      vertexShader: `
+        varying vec3 vNormal;
+        void main() {
+          vNormal = normalize(normalMatrix * normal);
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        varying vec3 vNormal;
+        void main() {
+          float intensity = pow(0.95 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 6.0);
+          gl_FragColor = vec4(1.0, 1.0, 0.0, 1.0) * intensity;
+        }
+      `,
+      side: THREE.BackSide
+    })
+  }
 
+  static clear(model){
+    for (let i = model.children.length-1; i>=0; i--){
+      if (model.children[i].isOutline) {
+        model.remove(model.children[i])
+      }
+    }
+  }
 }

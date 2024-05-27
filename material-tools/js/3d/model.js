@@ -194,22 +194,14 @@ export class Model{
   // model-panelからObject(model)を選択した時の処理
   static selected(model){
     if(!model){return}
-    // console.log(Data.mesh, model)
-
     for(const obj of Data.mesh){
-      obj.traverse((geo) => {
-        // console.log(geo)
-        if(geo.uuid === model.uuid){
-          new Outline(geo)
+      obj.traverse((mesh) => {
+        if(mesh.uuid === model.uuid){
+          new Outline(mesh)
         }
-        // if(obj3d.material){
-        //   obj3d.material.wireframe = flg
-        // }
-        // if(Array.isArray(obj3d.material)){
-        //   obj3d.material.forEach(function(mat, idx){
-        //     mat.wireframe = flg
-        //   })
-        // }
+        else{
+          Outline.clear(mesh)
+        }
       })
     }
   }

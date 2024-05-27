@@ -13,6 +13,7 @@ export class MaterialPanel{
     if(!this.model || !this.model.children){return}
     const material_datas = []
     for(const children of this.model.children){
+      if(children.isOutline){continue}
       if(children.material){
         material_datas.push(children.material)
       }

@@ -20,17 +20,9 @@ export class Event{
 		if(!elm){return}
 		const uuid = elm.getAttribute("data-uuid")
 		if(!uuid){return}
-		// const model = Data.mesh.find(e => e.uuid === uuid)
     const model = Data.model_lists.get_model(uuid)
-
 		Model.selected(model)
-
-		// console.log(Data.mesh,model,uuid)
-
     Data.materials = new MaterialPanel(model)
-		// if(!model){return}
-		// console.log(model)
-    
 	}
 
   click_materials(e){console.log(e.target)

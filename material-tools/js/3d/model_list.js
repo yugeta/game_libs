@@ -5,7 +5,7 @@ export class ModelList{
   num = 0
 
   constructor(gltf){
-    console.log(gltf)
+    // console.log(gltf)
     this.view_list(gltf.scenes)
   }
 

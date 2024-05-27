@@ -1,11 +1,17 @@
-import * as THREE      from "three"
-import { GLTFLoader }  from "GLTFLoader"
-import { DRACOLoader } from "DRACOLoader"
-import { Data }        from "../system/data.js"
-import { Elements }    from "../system/elements.js"
-import { Render }      from "../3d/render.js"
-import { ModelList }   from "../3d/model_list.js"
-import { Material }    from "../3d/material.js"
+import * as THREE         from "three"
+import { GLTFLoader }     from "GLTFLoader"
+import { DRACOLoader }    from "DRACOLoader"
+import { Data }           from "../system/data.js"
+import { Elements }       from "../system/elements.js"
+import { Render }         from "../3d/render.js"
+import { ModelList }      from "../3d/model_list.js"
+import { Material }       from "../3d/material.js"
+import { Outline }        from "../3d/outline.js"
+
+// import { EffectComposer } from "EffectComposer"
+// import { RenderPass }     from "RenderPass"
+// import { GlitchPass }     from "GlitchPass"
+// import { OutputPass }     from "OutputPass"
 
 export class Model{
   constructor(file){
@@ -16,7 +22,6 @@ export class Model{
       this.loader  = new GLTFLoader()
       this.file_load(file)
       this.set_event()
-      // console.log(this.loader)
     })
   }
 
@@ -28,10 +33,6 @@ export class Model{
     Elements.wire.addEventListener("click"    , ((e)=>{this.toggle_wire(Elements.wire.checked)}))
   }
 
-  // get_ext(filename){
-  //   return filename.split(".").pop()
-  // }
-
   file_load(file){
     const read  = new FileReader();
     read.onload = this.file_loaded.bind(this)
@@ -41,10 +42,6 @@ export class Model{
   file_loaded(e){
     const data = e.target.result
     const buf  = new Uint8Array(data);
-    
-    // const blob = new Blob([buf], {type: "model/gltf-binary"})
-    // const url  = URL.createObjectURL(blob)
-    // this.model_load(url)
 
     let blob = null
     switch(this.ext){
@@ -66,7 +63,9 @@ export class Model{
     this.loader.load(
       url,
       this.model_loaded.bind(this),
-      function(xhr){console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' )},
+      function(xhr){
+        // console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' )
+      },
       function(error){console.log( 'An error happened' )},
     )
   }
@@ -103,42 +102,13 @@ export class Model{
     Data.mesh.push(mesh)
     this.toggle_wire(Elements.wire.checked)
 
-    // console.log(mesh.children[0].children[1].material.map)
-    // // mesh.children[0].children[1].material.map.matrix.elements[6] = 1.0
-    // mesh.children[0].children[1].children[1].material.map.offset.x = 0.5
     mesh.traverse(object => {
       // Mesh
       if(object.isMesh){
         if(object.material.map
         && object.material.map.isTexture){
           Data.objects.push(object)
-          // console.log(object)
-          // console.log(object.material.map)
-          // object.material.map.offset.x += 0.5
-          // object.material.map.offset.y += 0.5
-
-          // this.anim(object)
-          // Data.material_animations.push(object)
-
-          // new Material({model:object})
-
-          // const name = object.name
-          // let duration = 1000
-          // let times = [0, duration / 2, duration],
-          //     values = [0,0, .5,.5, 0,0]
-          // let trackName = `${name}.material.map.offset`
-
-          // // let track = new THREE.VectorKeyframeTrack(trackName, times, values)
-          // let track = new THREE.VectorKeyframeTrack(trackName, times, values)
-
-          // let clip = new THREE.AnimationClip('material_animation_name', duration, [track])
-
-          // let mixer = new THREE.AnimationMixer(object)
-          // mixer.clipAction(clip).play()
         }
-        // if(object.material.map.isTexture){
-        //   // console.log(object)
-        // }
       }
       if(object.isGroup){
         // console.log("Group: ",object)
@@ -160,8 +130,7 @@ export class Model{
       function(error){console.log( 'An error happened' )}
     )
   }
-  model_dat_loaded(models){//console.log(JSON.parse(models));return
-    // console.log(gltf)
+  model_dat_loaded(models){
     Data.model_lists = new ModelList(gltf)
 
     const mesh = gltf.scene
@@ -191,54 +160,20 @@ export class Model{
     Render.scene.add(mesh)
     Data.mesh.push(mesh)
     this.toggle_wire(Elements.wire.checked)
-
-    // console.log(mesh.children[0].children[1].material.map)
-    // // mesh.children[0].children[1].material.map.matrix.elements[6] = 1.0
-    // mesh.children[0].children[1].children[1].material.map.offset.x = 0.5
     mesh.traverse(object => {
       // Mesh
       if(object.isMesh){
         if(object.material.map
         && object.material.map.isTexture){
-          // console.log(object)
-          // console.log(object.material.map)
-          // object.material.map.offset.x += 0.5
-          // object.material.map.offset.y += 0.5
-
           // this.anim(object)
           Data.material_animations.push(object)
-
-          // const name = object.name
-          // let duration = 1000
-          // let times = [0, duration / 2, duration],
-          //     values = [0,0, .5,.5, 0,0]
-          // let trackName = `${name}.material.map.offset`
-
-          // // let track = new THREE.VectorKeyframeTrack(trackName, times, values)
-          // let track = new THREE.VectorKeyframeTrack(trackName, times, values)
-
-          // let clip = new THREE.AnimationClip('material_animation_name', duration, [track])
-
-          // let mixer = new THREE.AnimationMixer(object)
-          // mixer.clipAction(clip).play()
         }
-        // if(object.material.map.isTexture){
-        //   // console.log(object)
-        // }
       }
       if(object.isGroup){
-        // console.log("Group: ",object)
       }
     })
     this.finish()
   }
-
-  // anim(object){
-  //   object.material.map.offset.x += 0.01
-  //   object.material.map.offset.y += 0.01
-
-  //   setTimeout(this.anim.bind(this,object) , 100)
-  // }
 
   // ワイヤーフレーム化(or 戻す)
   toggle_wire(flg){
@@ -256,9 +191,30 @@ export class Model{
     }
   }
 
+  // model-panelからObject(model)を選択した時の処理
+  static selected(model){
+    if(!model){return}
+    // console.log(Data.mesh, model)
+
+    for(const obj of Data.mesh){
+      obj.traverse((geo) => {
+        // console.log(geo)
+        if(geo.uuid === model.uuid){
+          new Outline(geo)
+        }
+        // if(obj3d.material){
+        //   obj3d.material.wireframe = flg
+        // }
+        // if(Array.isArray(obj3d.material)){
+        //   obj3d.material.forEach(function(mat, idx){
+        //     mat.wireframe = flg
+        //   })
+        // }
+      })
+    }
+  }
+
   finish(){
-    // this.view_lists()
-    
     this.resolve()
   }
 }

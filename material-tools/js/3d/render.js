@@ -3,10 +3,12 @@ import { Data }        from "../system/data.js"
 import { Elements }    from "../system/elements.js"
 import { Camera }      from "../3d/camera.js"
 import { Material }    from "../3d/material.js"
+import { Outline }     from "../3d/outline.js"
 
 export class Render{
   static renderer = null
   static scene    = null
+  static gl       = null
 
   get screen_size(){
     return {
@@ -16,20 +18,44 @@ export class Render{
   }
 
   constructor(){
-    Render.clock    = new THREE.Clock();
-    Render.scene    = new THREE.Scene()
-    Render.renderer = new THREE.WebGLRenderer()
-    this.set_screen()
+    Render.clock     = new THREE.Clock();
+
+    Render.scene     = new THREE.Scene()
+    Render.renderer  = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+    // Outline.gl       = Render.renderer.getContext()
+    // Render.renderer.setClearColor( 0x000000, 0 )
+    Render.renderer.autoClear = false
+    Render.renderer.setPixelRatio( window.devicePixelRatio )
+    this.set_screen(Render.renderer)
     Elements.screen.appendChild(Render.renderer.domElement)
+
+    // Outline.scene    = new THREE.Scene()
+    // Outline.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+    // Outline.gl       = Render.renderer.getContext()
+    // Outline.renderer.autoClear = false
+    // Outline.renderer.setPixelRatio( window.devicePixelRatio )
+    // this.set_screen(Outline.renderer)
+    // Elements.screen.appendChild(Outline.renderer.domElement)
+    Outline.scene    = new THREE.Scene()
+    // Outline.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false })
+    Outline.gl       = Render.renderer.getContext()
+    // Outline.renderer.autoClear = false
+    // Outline.renderer.setPixelRatio( window.devicePixelRatio )
+    // this.set_screen(Outline.renderer)
+    // Elements.screen.appendChild(Outline.renderer.domElement)
+    
     // //背景色を設定
     Render.renderer.setClearColor(Data.screen_bg_color, 1)
   }
 
-  set_screen(){
+  set_screen(renderer){
     // Render.renderer.setPixelRatio(window.devicePixelRatio);
-    Render.renderer.setSize(this.screen_size.w, this.screen_size.h)
+    renderer.setSize(this.screen_size.w, this.screen_size.h)
   }
   
+  set_render(){
+    
+  }
 
   // //レンダラーを作成
   // set_renderer(){
@@ -46,9 +72,32 @@ export class Render{
     if(Data.mixer){
       Data.mixer.update(Render.clock.getDelta())
     }
+
+    // Render.renderer.clear()
     // Render.material_animations()
-    Material.animation()
+
+    // Render.gl.enable(Render.gl.STENCIL_TEST)
+    // Render.gl.colorMask(false, false, false, false)
+    // Render.gl.depthMask(false)
+    // Render.gl.stencilFunc(Render.gl.ALWAYS, 1, ~0)
+    // Render.gl.stencilOp(Render.gl.KEEP, Render.gl.REPLACE, Render.gl.REPLACE)
     Render.renderer.render(Render.scene, Camera.obj)
+
+    // Render.gl.colorMask(false, false, false, false)
+    
+    // Outline.gl.enable(Outline.gl.STENCIL_TEST)
+    Outline.gl.depthMask(true)
+    // Outline.gl.stencilFunc(Outline.gl.EQUAL, 0, ~0)
+    // Outline.gl.stencilOp(Outline.gl.KEEP, Outline.gl.KEEP, Outline.gl.KEEP)
+    // Outline.gl.stencilOp(Outline.gl.KEEP, Outline.gl.REPLACE, Outline.gl.REPLACE)
+    // Outline.gl.colorMask(false, false, false, false)
+
+    // Outline.renderer.render(Outline.scene, Camera.obj)
+    // Outline.gl.enable(Outline.gl.STENCIL_TEST)
+    // Outline.gl.depthMask(false)
+    Render.renderer.render(Outline.scene, Camera.obj)
+
+    Material.animation()
   }
 
   // static material_animations(){

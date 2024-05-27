@@ -1,6 +1,5 @@
 import * as THREE      from "three"
 import { Jsonc } from "../../asset/js/jsonc.js"
-import { Material } from "../3d/material.js"
 
 export class Data{
   constructor(){

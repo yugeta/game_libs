@@ -1,6 +1,7 @@
-import { Data }      from "../system/data.js"
-import { Elements }  from "../system/elements.js"
+import { Data }          from "../system/data.js"
+import { Elements }      from "../system/elements.js"
 import { MaterialPanel } from "../system/material_panel.js"
+import { Model }         from "../3d/model.js"
 
 export class Event{
   constructor(){
@@ -21,6 +22,9 @@ export class Event{
 		if(!uuid){return}
 		// const model = Data.mesh.find(e => e.uuid === uuid)
     const model = Data.model_lists.get_model(uuid)
+
+		Model.selected(model)
+
 		// console.log(Data.mesh,model,uuid)
 
     Data.materials = new MaterialPanel(model)

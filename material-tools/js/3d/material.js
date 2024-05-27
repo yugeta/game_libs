@@ -32,7 +32,7 @@ export class Material{
       //   console.log(this.options.model)
       // }
     }
-    console.log(Data.setting.material_animations)
+    // console.log(Data.setting.material_animations)
   }
 
   get_mesh(setting_data){
@@ -57,7 +57,7 @@ export class Material{
       for(const object of data.objects){
         switch(data.type){
           case "scroll":
-            this.anim_scroll(object, data)
+            Material.anim_scroll(object, data)
           break
         }
         

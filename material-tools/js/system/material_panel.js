@@ -4,7 +4,7 @@ import { Elements }  from "../system/elements.js"
 export class MaterialPanel{
   constructor(model){
     this.model = model
-    console.log(model)
+    // console.log(model)
     this.clear()
     this.view_list()
   }
@@ -39,5 +39,6 @@ export class MaterialPanel{
 
   click(e){
     console.log(e)
+
   }
 }

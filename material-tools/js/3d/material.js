@@ -70,7 +70,57 @@ export class Material{
     object.material.map.offset.y += data.direction.y
   }
 
-  static select(model_name, material_name){
-    
+  static select(name){
+    for(const mesh of Data.mesh){
+      mesh.traverse((model) => {
+        if(!model.isMesh){return}
+        if(!model.material || model.material.name !== name){return}
+        model.material.isSelect = true
+console.log(model)
+
+        // model.material.flatShading = true
+        model.material.color_backup = {
+          r: model.material.color.r,
+          g: model.material.color.g,
+          b: model.material.color.b,
+        }
+
+        const color = {
+          r:0.2,
+          g:0.2,
+          b:0.2,
+        }
+        model.material.color.r = color.r
+        model.material.color.g = color.g
+        model.material.color.b = color.b
+
+        // 半透明にする
+        model.material.transparent = true
+        model.material.alphaToCoverage = true
+        model.material.opacity = 0.8
+      })
+    }
+  }
+
+  static unselect_all(){
+    for(const mesh of Data.mesh){
+      mesh.traverse((model) => {
+        if(!model.isMesh){return}
+        if(!model.material || !model.material.isSelect){return}
+        model.material.isSelect = false
+
+        
+        model.material.color.r = model.material.color_backup.r
+        model.material.color.g = model.material.color_backup.g
+        model.material.color.b = model.material.color_backup.b
+
+        // 半透明を戻す
+        model.material.transparent = false
+        model.material.alphaToCoverage = false
+        model.material.opacity = 1.0
+
+
+      })
+    }
   }
 }

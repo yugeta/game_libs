@@ -51,5 +51,6 @@ export class Outline{
         model.remove(model.children[i])
       }
     }
+    // Outline.current_uuid = null
   }
 }

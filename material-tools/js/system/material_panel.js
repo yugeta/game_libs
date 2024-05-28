@@ -5,7 +5,7 @@ export class MaterialPanel{
   constructor(model){
     this.model = model
     // console.log(model)
-    this.clear()
+    MaterialPanel.clear()
     this.view_list()
   }
 
@@ -21,7 +21,7 @@ export class MaterialPanel{
     return material_datas
   }
 
-  clear(){
+  static clear(){
     Elements.materials.innerHTML = ""
   }
 
@@ -32,14 +32,15 @@ export class MaterialPanel{
     for(const list of lists){
       const li = document.createElement("li")
       li.setAttribute("data-uuid", list.uuid)
+      li.setAttribute("data-name", list.name)
       li.textContent = `${num} : ${list.name}`
       Elements.materials.appendChild(li)
       num++
     }
   }
 
-  click(e){
-    console.log(e)
+  // click(e){
+  //   console.log(e)
 
-  }
+  // }
 }

@@ -34,7 +34,7 @@ export class Render{
 
   set_screen(renderer){
     // Render.renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(this.screen_size.w, this.screen_size.h)
+    Render.renderer.setSize(this.screen_size.w, this.screen_size.h)
   }
   
   set_render(){

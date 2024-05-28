@@ -38,7 +38,14 @@
 }
 #materials li:nth-of-type(2n+1){
 }
-#materials li:hover{
+
+/* 選択 */
+#materials li[data-status="select"]{
+	background-color:rgb(237, 237, 203);
+	color:black;
+}
+
+#materials li:hover:not([data-status="select"]){
 	background-color:rgba(0,0,80,0.5);
 }
 

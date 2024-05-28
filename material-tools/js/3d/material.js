@@ -69,4 +69,8 @@ export class Material{
     object.material.map.offset.x += data.direction.x
     object.material.map.offset.y += data.direction.y
   }
+
+  static select(model_name, material_name){
+    
+  }
 }

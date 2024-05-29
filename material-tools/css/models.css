@@ -11,6 +11,10 @@
 	overflow:hidden;
 }
 
+#models:has(.lists:empty){
+	display:none;
+}
+
 #models p{
 	color:white;
 	padding:5px;

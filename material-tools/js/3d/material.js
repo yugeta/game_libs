@@ -1,6 +1,8 @@
 import { Data } from "../system/data.js"
 
 export class Material{
+  static current_name = null
+
   constructor(options){//console.log(options,Data.setting.material_animations)
     this.options = options
     this.promise = new Promise((resolve, reject)=>{
@@ -100,6 +102,7 @@ console.log(model)
         model.material.opacity = 0.8
       })
     }
+    Material.current_name = name
   }
 
   static unselect_all(){

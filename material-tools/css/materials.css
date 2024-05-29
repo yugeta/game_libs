@@ -11,6 +11,11 @@
 	overflow:hidden;
 }
 
+#materials:has(.lists:empty){
+	display:none;
+}
+
+
 #materials p{
 	color:white;
 	padding:5px;

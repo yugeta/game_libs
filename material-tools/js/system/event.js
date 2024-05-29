@@ -59,6 +59,16 @@ export class Event{
     // Data.materials.click(e)
 
 		Material.unselect_all()
+		if(Material.current_name === material_name){
+			const li_arr = elm.parentNode.querySelectorAll(`li`)
+			for(const li of li_arr){
+				if(li.hasAttribute("data-status")){
+					li.removeAttribute("data-status")
+				}
+			}
+			Material.current_name = null
+			return
+		}
 		Material.select(material_name)
 
 		// 項目選択(解除)

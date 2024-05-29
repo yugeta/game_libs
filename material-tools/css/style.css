@@ -4,6 +4,7 @@
 @import "screen.css";
 @import "models.css";
 @import "materials.css";
+@import "setting.css";
 
 html,body,#screen{
   margin:0;

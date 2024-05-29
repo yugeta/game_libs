@@ -78,7 +78,7 @@ export class Material{
         if(!model.isMesh){return}
         if(!model.material || model.material.name !== name){return}
         model.material.isSelect = true
-console.log(model)
+// console.log(model)
 
         // model.material.flatShading = true
         model.material.color_backup = {

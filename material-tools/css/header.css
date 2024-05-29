@@ -1,5 +1,8 @@
-header{
+:root{
   --size-control-height : 30px;
+}
+
+header{
   --color-menu-hover : #333;
   --size-font        : 11px;
 

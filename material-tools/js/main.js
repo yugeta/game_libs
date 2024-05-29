@@ -23,7 +23,8 @@ class Main{
   
   load_asset(){
     new Asset([
-      "header.html"
+      "header.html",
+      "setting/material.html",
     ]).promise.then(()=>{this.system_setting()})
   }
 

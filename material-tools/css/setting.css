@@ -1,0 +1,69 @@
+#setting{
+	position:absolute;
+	top:calc(var(--size-control-height) + 10px);
+  right:10px;
+	width:200px;
+  min-width:100px;
+  min-height:40px;
+	background-color:rgba(120, 77, 2, 0.5);
+	border-radius:5px;
+	overflow:hidden;
+  padding:5px;
+}
+
+#setting:has(.setting-forms:empty){
+	display:none;
+}
+
+#setting p.main-title{
+	color:white;
+	padding:5px;
+	margin:0;
+	text-align:center;
+	font-size:11px;
+}
+
+/* setting-forms */
+#setting .setting-forms > *{
+  border-top:1px solid #888;
+  padding:10px;
+}
+#setting .setting-forms > *{
+  color:white;
+	padding:5px;
+	margin:0;
+	text-align:left;
+	font-size:10px;
+}
+
+#setting .setting-forms p{
+  margin:0;
+  margin-bottom:5px;
+}
+
+#setting .setting-forms input:not([type="radio"],[type="checkbox"]),
+#setting .setting-forms select,
+#setting .setting-forms textarea{
+  width:100%;
+  border:0;
+  outline:none;
+  padding:5px;
+  margin:5px 0;
+  border-radius:4px;
+}
+#setting .flex-row{
+  display:flex;
+  align-items:center;
+  gap:5px;
+}
+#setting .flex-column{
+  display:flex;
+  align-items:center;
+  flex-direction:column;
+  gap:5px;
+}
+#setting .setting-forms label{
+  padding:0;
+}
+
+

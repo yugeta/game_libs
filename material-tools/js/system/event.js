@@ -4,6 +4,7 @@ import { MaterialPanel } from "../system/material_panel.js"
 import { Model }         from "../3d/model.js"
 import { Outline }       from "../3d/outline.js"
 import { Material }      from "../3d/material.js"
+import { Setting }       from "../system/setting.js"
 
 export class Event{
   constructor(){
@@ -67,6 +68,7 @@ export class Event{
 				}
 			}
 			Material.current_name = null
+			Setting.clear()
 			return
 		}
 		Material.select(material_name)
@@ -81,6 +83,8 @@ export class Event{
 				li.removeAttribute("data-status")
 			}
 		}
+
+		new Setting("material")
   }
 
 	resize_window(){

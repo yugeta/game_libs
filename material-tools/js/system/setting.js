@@ -29,6 +29,10 @@ export class Setting{
    */
 
   view_material(){
+    if(!Data.setting.material_animations){
+      Data.setting.material_animations = []
+    }
+
     const asset = Asset.datas.find(e => e.name === "setting/material.html")
     if(!asset){return}
     const material_name = Material.current_name
@@ -61,22 +65,26 @@ export class Setting{
     const material_name = Material.current_name
     if(!material_name){return}
     
-
     if(!Data.setting){
       Data.setting = {}
     }
     if(!Data.setting.material_animations){
-      Data.setting.material_animations = {}
+      Data.setting.material_animations = []
     }
     // if(!Data.setting.material_animations.direction){
     //   Data.setting.material_animations.direction = {}
     // }
 
-    const setting_data = Data.setting.material_animations.find(e => e.material === material_name)
-
-    setting_data.type = "scroll"
+    const setting_data = Data.setting.material_animations.find(e => e.material === material_name) || {}
+    if(!Object.keys(setting_data).length){
+      Data.setting.material_animations.push(setting_data)
+    }
+    
     if(!setting_data.direction){
+      setting_data.material  = material_name
+      setting_data.type      = "scroll"
       setting_data.direction = {}
+      setting_data.objects   = Material.get_mesh({material:material_name})
     }
     setting_data.direction.x = Number(this.form_direction_x.value)
     setting_data.direction.y = Number(this.form_direction_y.value)

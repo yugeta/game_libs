@@ -14,6 +14,10 @@ export class Material{
   }
 
   init(){
+    // if(!Data.setting || !Data.setting.material_animations){
+    //   this.finish()
+    //   return
+    // }
     if(Data.setting && Data.setting.material_animations){
       this.data_set(Data.setting.material_animations)
     }
@@ -24,7 +28,7 @@ export class Material{
     // console.log(Data.objects)
     for(const data of setting_datas){
       // console.log(data)
-      const meshes = this.get_mesh(data)
+      const meshes = Material.get_mesh(data)
       if(!data.objects){
         data.objects = []
       }
@@ -37,7 +41,7 @@ export class Material{
     // console.log(Data.setting.material_animations)
   }
 
-  get_mesh(setting_data){
+  static get_mesh(setting_data){
     if(setting_data.model && setting_data.material){
       const mesh = Data.objects.find(e => e.parent.name === setting_data.model && e.material.name === setting_data.material)
       return [mesh]
@@ -54,6 +58,7 @@ export class Material{
   }
 
   static animation(){
+    if(!Data.setting || !Data.setting.material_animations){return }
     for(const data of Data.setting.material_animations){
       if(!data.objects || !data.objects.length){continue}
       for(const object of data.objects){

@@ -22,27 +22,27 @@
     "color"     : "#ffffff",
     "elm"       : null,
     "intensity" : 1.0
-	},
+	}
 
-  "material_animations" : [
-    {
-      "material" : "m-4",
-      "type" : "scroll",
-      "direction" : {
-        "x" : 0.00,
-        "y" : 0.005
-      },
-      "$" : null
-    },
-    {
-      "model" : "Cube001",
-      "material" : "m-3",
-      "type" : "scroll",
-      "direction" : {
-        "x" : -0.005,
-        "y" : 0.00
-      },
-      "$" : null
-    }
-  ]
+  // "material_animations" : [
+  //   {
+  //     "material" : "m-4",
+  //     "type" : "scroll",
+  //     "direction" : {
+  //       "x" : 0.00,
+  //       "y" : 0.005
+  //     },
+  //     "$" : null
+  //   },
+  //   {
+  //     "model" : "Cube001",
+  //     "material" : "m-3",
+  //     "type" : "scroll",
+  //     "direction" : {
+  //       "x" : -0.005,
+  //       "y" : 0.00
+  //     },
+  //     "$" : null
+  //   }
+  // ]
 }

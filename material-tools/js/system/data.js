@@ -2,6 +2,8 @@ import * as THREE      from "three"
 import { Jsonc } from "../../asset/js/jsonc.js"
 
 export class Data{
+  static files = []
+
   constructor(){
     this.promise = new Promise((resolve, reject)=>{
       this.resolve = resolve

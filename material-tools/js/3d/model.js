@@ -41,6 +41,10 @@ export class Model{
 
   file_loaded(e){
     const data = e.target.result
+    Data.files.push({
+      name : this.file.name,
+      data : data,
+    })
     const buf  = new Uint8Array(data);
 
     let blob = null

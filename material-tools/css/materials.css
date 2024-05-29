@@ -1,0 +1,84 @@
+#materials{
+	position:absolute;
+	top:10px;
+  left:170px;
+	width:150px;
+  min-width:100px;
+  min-height:40px;
+	background-color:rgba(0,0,30,0.5);
+	border-radius:5px;
+	/* border:1px solid rgba(0,0,0,0.5); */
+	overflow:hidden;
+}
+
+#materials:has(.lists:empty){
+	display:none;
+}
+
+
+#materials p{
+	color:white;
+	padding:5px;
+	margin:0;
+	text-align:center;
+	font-size:11px;
+}
+#materials ul{
+	margin:0;
+	padding:0;
+	color:white;
+	font-size:10px;
+	display:flex;
+	flex-direction:column;
+	height:200px;
+	overflow:auto;
+}
+#materials li{
+	list-style:none;
+	margin:0;
+	padding:3px 10px;
+	color:white;
+	font-size:10px;
+	cursor:pointer;
+}
+#materials li:nth-of-type(2n+1){
+}
+
+/* 選択 */
+#materials li[data-status="select"]{
+	background-color:rgb(237, 237, 203);
+	color:black;
+}
+
+#materials li:hover:not([data-status="select"]){
+	background-color:rgba(0,0,80,0.5);
+}
+
+/* スクロールバー全体 */
+#materials ul::-webkit-scrollbar {
+	width: 10px;
+}
+/* スクロールバー背景 */
+#materials ul::-webkit-scrollbar-track {
+	background: #333;
+	box-shadow: inset 0 0 2px #777;
+}
+/* スクロールバーつまみ */
+#materials ul::-webkit-scrollbar-thumb {
+	background: #3b5d82;
+}
+
+/* Resize */
+#materials .resize{
+	position:absolute;
+	right:-1px;
+	bottom:-1px;
+	width:10px;
+	height:10px;
+	background-color:transparent;
+	z-index:10;
+	cursor:nwse-resize;
+}
+
+
+

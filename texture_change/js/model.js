@@ -65,51 +65,7 @@ export class Model{
     Render.scene.add(mesh)
     Data.mesh.push(mesh)
     Model.click_wire(Data.elm_wire_button.checked)
-
-    // console.log(mesh.children[0].children[1].material.map)
-    // // mesh.children[0].children[1].material.map.matrix.elements[6] = 1.0
-    // mesh.children[0].children[1].children[1].material.map.offset.x = 0.5
-    mesh.traverse(object => {
-      // Mesh
-      if(object.isMesh){
-        if(object.material.map
-        && object.material.map.isTexture){
-          console.log(object)
-          // console.log(object.material.map)
-          // object.material.map.offset.x += 0.5
-          // object.material.map.offset.y += 0.5
-
-          this.anim(object)
-
-          // const name = object.name
-          // let duration = 1000
-          // let times = [0, duration / 2, duration],
-          //     values = [0,0, .5,.5, 0,0]
-          // let trackName = `${name}.material.map.offset`
-
-          // // let track = new THREE.VectorKeyframeTrack(trackName, times, values)
-          // let track = new THREE.VectorKeyframeTrack(trackName, times, values)
-
-          // let clip = new THREE.AnimationClip('material_animation_name', duration, [track])
-
-          // let mixer = new THREE.AnimationMixer(object)
-          // mixer.clipAction(clip).play()
-        }
-        // if(object.material.map.isTexture){
-        //   // console.log(object)
-        // }
-      }
-      if(object.isGroup){
-        // console.log("Group: ",object)
-      }
-    })
-  }
-
-  anim(object){
-    object.material.map.offset.x += 0.01
-    object.material.map.offset.y += 0.01
-
-    setTimeout(this.anim.bind(this,object) , 100)
+    this.texture_change()
   }
 
   // ワイヤーフレーム化(戻す)
@@ -126,5 +82,9 @@ export class Model{
         }
       })
     }
+  }
+
+  texture_change(){
+    console.log(Data.mesh)
   }
 }

@@ -1,0 +1,48 @@
+{
+	"screen" : {
+		"bg_color" : "0x444444"
+	},
+	"light" : {
+		"name"  : "direct_light",
+    "obj"   : null,
+    "color" : "#FFFFFF",
+    "color_select" : "#FF0000",
+    "pos" : {
+      "x" : 5,
+      "y" : 7,
+      "z" : 5
+    },
+    "segment"   : 8,
+    "size"      : 0.3,
+    "line_name" : "direct-light-line",
+    "opacity"   : 0.5
+	},
+	"ambient" : {
+		"obj"       : null,
+    "color"     : "#ffffff",
+    "elm"       : null,
+    "intensity" : 1.0
+	},
+
+  "material_animations" : [
+    {
+      "material" : "m-4",
+      "type" : "scroll",
+      "direction" : {
+        "x" : 0.00,
+        "y" : 0.005
+      },
+      "$" : null
+    },
+    {
+      "model" : "Cube001",
+      "material" : "m-3",
+      "type" : "scroll",
+      "direction" : {
+        "x" : -0.005,
+        "y" : 0.00
+      },
+      "$" : null
+    }
+  ]
+}

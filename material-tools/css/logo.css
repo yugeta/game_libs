@@ -1,0 +1,13 @@
+header img,
+header svg{
+  height:100%;
+}
+header .logo{
+  padding:5px;
+}
+header .logo img,
+header .logo svg{
+  max-width : var(--size-control-height);
+  max-height : var(--size-control-height);
+  fill:white;
+}

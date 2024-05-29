@@ -1,0 +1,38 @@
+<input class="hidden" id="import" type="file" accept=".glb, .gltf" />
+
+<ul>
+	<li class="logo">
+		<svg src="asset/img/view.svg"></svg>
+	</li>
+
+	<li>
+		<input class="sub-menu hidden" id="list_1" type="checkbox" name="header_menu"/>
+		<label class="close" for="list_1">File</label>
+		<ul>
+			<li><label for="import">Import</label></li>
+			<li><label for="list_1">Export</label></li>
+		</ul>
+	</li>
+
+	<li>
+		<input class="sub-menu hidden" id="list_2" type="checkbox" name="header_menu"/>
+		<label class="close" for="list_2">Light</label>
+		<ul>
+			<li><label class="ambient"><input type="color" name="ambient">Ambient</label></li>
+		</ul>
+	</li>
+
+	<li>
+		<input class="sub-menu hidden" id="list_3" type="checkbox" name="header_menu"/>
+		<label class="close" for="list_3">Environment</label>
+		<ul>
+			<li><label class="grid"><input type="checkbox" name="grid" checked/>Grid</label></li>
+			<li><label class="wire"><input type="checkbox" name="wire"/>Wire</label></li>
+		</ul>
+	</li>
+
+	<!-- <li><label name="upload"><input class="hidden" type="file" name="glb" accept=".glb, .gltf, .fbx" />3Dデータアップロード (glb)</label></li> -->
+	<!-- <li><label class="grid"><input type="checkbox" name="grid" checked/>Grid</label></li> -->
+	<!-- <li><label class="wire"><input type="checkbox" name="wire"/>Wire</label></li> -->
+	<!-- <li><label class="ambient"><input type="color" name="ambient">Ambient</label></li> -->
+</ul>

@@ -1,5 +1,4 @@
 import { Data }     from "../../system/data.js"
-// import { Zip }      from "../../../asset/zip/zip.min.js"
 
 export class Export{
   constructor(){
@@ -19,10 +18,34 @@ export class Export{
     }
   }
 
+  
+
   make_data(){
+    // setting.json
     this.zip.addFile(this.create_setting_data(), {
       filename: this.stringToByteArray("setting.json"),
     })
+    const url = window.URL || window.webkitURL
+
+    // glb-files
+    // console.log(Data.files)
+    for(const glb_file of Data.files){
+      const data = this.convert_buffer2data(glb_file.buf)
+      this.zip.addFile(data, {
+        filename: this.stringToByteArray(glb_file.name),
+      })
+    }
+  }
+
+  // bufferデータを分割してデータ変換する処理
+  max_buffer = 1024
+  convert_buffer2data(data){
+    const buf  = new Uint8Array(data)
+    let res = '';
+    for(var i=0; i<buf.length; i+=this.max_buffer){
+      res += String.fromCharCode.apply(null, buf.slice(i, i+this.max_buffer))
+    }
+    return this.stringToByteArray(res)
   }
 
   download(){
@@ -36,16 +59,8 @@ export class Export{
     a.download = this.download_name
     document.body.appendChild(a)
     a.click()
-    // 
-    // url.revokeObjectURL(href)
     document.body.removeChild(a)
   }
-
-  // get data_url(){
-  //   const buf  = this.zip.compress()
-  //   const blob = new Blob([buf], {type: "application/zip"})
-  //   return URL.createObjectURL(blob);
-  // }
 
   get download_name(){
     return "data_"+ (+new Date()) +".zip"
@@ -56,13 +71,14 @@ export class Export{
    * setting.jsonの作成
    */
   create_setting_data(){
-    // const setting_json = JSON.stringify(Data.setting.material_animations.map(e => {
-    //   e.material,
-    //   e.direction,
-    //   e.type,
-    // }) , null , "  ")
-    const setting_json = JSON.stringify("{a:1,b:2}" , null , "  ")
-    console.log(setting_json)
+    const data = Data.setting ? {
+      material_animations : Data.setting.material_animations ? Data.setting.material_animations.map(e => ({
+        material  : e.material,
+        type      : e.type,
+        direction : e.direction,
+      })) : [],
+    }: {}
+    const setting_json = JSON.stringify(data , null , "  ")
     const str = unescape(encodeURIComponent(setting_json))
     return this.stringToByteArray(str)
   }

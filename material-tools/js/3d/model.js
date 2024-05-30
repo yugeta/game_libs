@@ -41,10 +41,6 @@ export class Model{
 
   file_loaded(e){
     const data = e.target.result
-    Data.files.push({
-      name : this.file.name,
-      data : data,
-    })
     const buf  = new Uint8Array(data);
 
     let blob = null
@@ -59,6 +55,15 @@ export class Model{
         this.model_load(URL.createObjectURL(blob))
       break
     }
+
+    // 保存用データ格納
+    Data.files.push({
+      name   : this.file.name,
+      // data   : data,
+      buffer : buf,
+      // blob   : blob,
+      // file : this.file,
+    })
   }
 
   model_load(url){

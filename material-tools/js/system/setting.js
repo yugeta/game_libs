@@ -71,9 +71,6 @@ export class Setting{
     if(!Data.setting.material_animations){
       Data.setting.material_animations = []
     }
-    // if(!Data.setting.material_animations.direction){
-    //   Data.setting.material_animations.direction = {}
-    // }
 
     const setting_data = Data.setting.material_animations.find(e => e.material === material_name) || {}
     if(!Object.keys(setting_data).length){
@@ -88,7 +85,6 @@ export class Setting{
     }
     setting_data.direction.x = Number(this.form_direction_x.value)
     setting_data.direction.y = Number(this.form_direction_y.value)
-    console.log(Data.setting.material_animations)
   }
 
 

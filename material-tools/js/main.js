@@ -1,6 +1,7 @@
 import { Header }   from "./system/header.js"
 import { Data }     from "./system/data.js"
 import { Event }    from "./system/event.js"
+import { Zip }      from "./system/Zip.js"
 import { Asset }    from "../asset/js/asset.js"
 import { Svg }      from "../asset/js/svg.js"
 import { Render }   from "./3d/render.js"
@@ -17,6 +18,12 @@ class Main{
 
   load_data(){
     new Data().promise.then(()=>{
+      this.load_zip_module()
+    })
+  }
+
+  load_zip_module(){
+    new Zip().promise.then(()=>{
       this.load_asset()
     })
   }
